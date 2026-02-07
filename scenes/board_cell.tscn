@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://dne0b6cy71fm"]
+
+[ext_resource type="SpriteFrames" uid="uid://c8shstp85dphc" path="res://resources/grid_cell_frames.tres" id="1_b2452"]
+[ext_resource type="Script" uid="uid://fq3doh6l61n0" path="res://scripts/BoardCell.cs" id="2_a5naf"]
+[ext_resource type="SpriteFrames" uid="uid://dcayuawl45c0t" path="res://resources/grid_cell_xo.tres" id="3_0vake"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0vake"]
+size = Vector2(32, 32)
+
+[node name="BoardCell" type="AnimatedSprite2D" unique_id=685448502]
+sprite_frames = ExtResource("1_b2452")
+centered = false
+script = ExtResource("2_a5naf")
+
+[node name="XO" type="AnimatedSprite2D" parent="." unique_id=1475349489]
+sprite_frames = ExtResource("3_0vake")
+centered = false
+
+[node name="MouseDetectionArea" type="Area2D" parent="." unique_id=1894881212]
+position = Vector2(16, 16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MouseDetectionArea" unique_id=1341948274]
+shape = SubResource("RectangleShape2D_0vake")

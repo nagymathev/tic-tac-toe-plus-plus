@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://c8shstp85dphc"]
+
+[ext_resource type="Texture2D" uid="uid://bku7vl7fna3yw" path="res://assets/grid_cells.png" id="1_nxvjn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_edxma"]
+atlas = ExtResource("1_nxvjn")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tu2fs"]
+atlas = ExtResource("1_nxvjn")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u2rt6"]
+atlas = ExtResource("1_nxvjn")
+region = Rect2(64, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edxma")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tu2fs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u2rt6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]

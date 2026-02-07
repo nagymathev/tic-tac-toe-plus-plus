@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="BoardResource" format=3 uid="uid://b3pannjy6njqt"]
+
+[ext_resource type="Script" uid="uid://b5hhcwerhwpcc" path="res://scripts/BoardResource.cs" id="1_1556n"]
+
+[resource]
+script = ExtResource("1_1556n")
+metadata/_custom_type_script = "uid://b5hhcwerhwpcc"
