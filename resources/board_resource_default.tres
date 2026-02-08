@@ -1,7 +1,6 @@
-[gd_resource type="Resource" script_class="BoardResource" format=3 uid="uid://bmgv1s8gq56nr"]
+[gd_resource type="Resource" script_class="BoardSettings" format=3 uid="uid://bmgv1s8gq56nr"]
 
-[ext_resource type="Script" uid="uid://gvmonk4lw1qg" path="res://scripts/board_resource.gd" id="1_1556n"]
+[ext_resource type="Script" path="res://scripts/board_settings.gd" id="1_1556n"]
 
 [resource]
 script = ExtResource("1_1556n")
-cell_size = 128

@@ -3,7 +3,7 @@
 extends Node2D
 class_name Board
 
-@export var _board_stats: BoardResource
+@export var _board_stats: BoardSettings
 
 func _on_board_stats_changed():
 	print("[Board] Stats Changed")

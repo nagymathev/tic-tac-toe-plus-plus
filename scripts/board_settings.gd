@@ -1,7 +1,7 @@
 @tool
 
 extends Resource
-class_name BoardResource
+class_name BoardSettings
 
 @export_range(3, 27, 2)
 var size_x: int = 3:
