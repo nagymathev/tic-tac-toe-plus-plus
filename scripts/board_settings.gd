@@ -19,10 +19,24 @@ var size_y: int = 3:
 		size_y = value
 		emit_changed()
 
-@export_range(32, 128, 32, "prefer_slider")
-var cell_size: int = 32:
+@export
+var cell_sprite_frames: SpriteFrames
+
+@export
+var cell_xo_sprite_frames: SpriteFrames
+
+@export_range(8, 128, 8, "prefer_slider")
+var cell_size: int = 24:
 	get:
 		return cell_size
 	set(value):
 		cell_size = value
+		emit_changed()
+
+@export_range(1, 8, 1, "prefer_slider")
+var cell_scale: int = 1:
+	get:
+		return cell_scale
+	set(value):
+		cell_scale = value
 		emit_changed()

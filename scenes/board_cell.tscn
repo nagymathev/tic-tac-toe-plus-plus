@@ -1,18 +1,20 @@
 [gd_scene format=3 uid="uid://t1154idky767"]
 
 [ext_resource type="Script" uid="uid://bx10x6hwhq4j0" path="res://scripts/board_cell.gd" id="1_0vake"]
-[ext_resource type="SpriteFrames" uid="uid://h8dqp6p8mlys" path="res://resources/grid_cell_sprite_frames.tres" id="1_a5naf"]
-[ext_resource type="SpriteFrames" uid="uid://8jhdbnb8s8eh" path="res://resources/xo_sprite_frame.tres" id="2_0vake"]
+[ext_resource type="Resource" uid="uid://bmgv1s8gq56nr" path="res://resources/board_settings_default.tres" id="2_ked58"]
+[ext_resource type="SpriteFrames" uid="uid://bblu1v8rqlln3" path="res://resources/cell_frame_24_sprite_frame.tres" id="3_ked58"]
+[ext_resource type="SpriteFrames" uid="uid://dsgquww8aiesq" path="res://resources/cell_xo_24_sprite_frame.tres" id="4_wvn1a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0vake"]
-size = Vector2(32, 32)
+size = Vector2(24, 24)
 
 [node name="Cell" type="Node2D" unique_id=33723157]
 script = ExtResource("1_0vake")
+_board_settings = ExtResource("2_ked58")
 
 [node name="CellFrame" type="AnimatedSprite2D" parent="." unique_id=1704510305]
-position = Vector2(16, 16)
-sprite_frames = ExtResource("1_a5naf")
+position = Vector2(12, 12)
+sprite_frames = ExtResource("3_ked58")
 
 [node name="Area2D" type="Area2D" parent="CellFrame" unique_id=2142165066]
 
@@ -20,4 +22,5 @@ sprite_frames = ExtResource("1_a5naf")
 shape = SubResource("RectangleShape2D_0vake")
 
 [node name="CellXO" type="AnimatedSprite2D" parent="CellFrame" unique_id=351564349]
-sprite_frames = ExtResource("2_0vake")
+visible = false
+sprite_frames = ExtResource("4_wvn1a")

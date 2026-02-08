@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BoardSettings" format=3 uid="uid://bmgv1s8gq56nr"]
+
+[ext_resource type="Script" uid="uid://qgjanibdoxi8" path="res://scripts/board_settings.gd" id="1_1556n"]
+[ext_resource type="SpriteFrames" uid="uid://bblu1v8rqlln3" path="res://resources/cell_frame_24_sprite_frame.tres" id="1_rh7re"]
+[ext_resource type="SpriteFrames" uid="uid://dsgquww8aiesq" path="res://resources/cell_xo_24_sprite_frame.tres" id="2_keq10"]
+
+[resource]
+script = ExtResource("1_1556n")
+cell_sprite_frames = ExtResource("1_rh7re")
+cell_xo_sprite_frames = ExtResource("2_keq10")
+cell_scale = 8

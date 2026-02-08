@@ -1,0 +1,32 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://bblu1v8rqlln3"]
+
+[ext_resource type="Texture2D" uid="uid://dv5fappn7i2rw" path="res://assets/board-cell-24.png" id="1_r4sb1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r4sb1"]
+atlas = ExtResource("1_r4sb1")
+region = Rect2(0, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uye7y"]
+atlas = ExtResource("1_r4sb1")
+region = Rect2(24, 0, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkyh4"]
+atlas = ExtResource("1_r4sb1")
+region = Rect2(48, 0, 24, 24)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r4sb1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uye7y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fkyh4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
