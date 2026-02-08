@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="tictactoe-plusplus"
-run/main_scene="uid://docledg5rrvat"
-config/features=PackedStringArray("4.6", "C#", "Mobile")
+run/main_scene="uid://bos73gp8ebmm2"
+config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
 [display]

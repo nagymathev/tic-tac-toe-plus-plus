@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://cav2yflw6l8qm"]
-
-[ext_resource type="Script" uid="uid://mu48p5odq1g0" path="res://scripts/Board.cs" id="1_p0ybc"]
-[ext_resource type="Resource" uid="uid://b3pannjy6njqt" path="res://resources/board_resource_default.tres" id="2_tx6nw"]
-
-[node name="BoardContainer" type="Node2D" unique_id=1939371958]
-script = ExtResource("1_p0ybc")
-BoardStats = ExtResource("2_tx6nw")

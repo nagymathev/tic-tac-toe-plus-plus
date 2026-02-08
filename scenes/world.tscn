@@ -1,7 +1,11 @@
-[gd_scene format=3 uid="uid://docledg5rrvat"]
+[gd_scene format=3 uid="uid://bos73gp8ebmm2"]
 
-[ext_resource type="PackedScene" uid="uid://cav2yflw6l8qm" path="res://scenes/board.tscn" id="1_nnsk1"]
+[ext_resource type="Script" uid="uid://pdcmelomujlj" path="res://scripts/board.gd" id="1_nnsk1"]
+[ext_resource type="Resource" uid="uid://bmgv1s8gq56nr" path="res://resources/board_resource_default.tres" id="2_rwgxs"]
 
-[node name="World" type="Node2D" unique_id=688365372]
+[node name="World" type="Node2D" unique_id=571766068]
 
-[node name="BoardContainer" parent="." unique_id=1939371958 instance=ExtResource("1_nnsk1")]
+[node name="Board" type="Node2D" parent="." unique_id=1632137332]
+position = Vector2(26, 22)
+script = ExtResource("1_nnsk1")
+_board_stats = ExtResource("2_rwgxs")

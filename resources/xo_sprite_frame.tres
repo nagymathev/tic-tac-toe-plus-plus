@@ -1,0 +1,25 @@
+[gd_resource type="SpriteFrames" format=3 uid="uid://8jhdbnb8s8eh"]
+
+[ext_resource type="Texture2D" uid="uid://enn3feffaxrr" path="res://assets/tic-tac-toe-board-xo.png" id="1_5lacp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1sf5q"]
+atlas = ExtResource("1_5lacp")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4faq6"]
+atlas = ExtResource("1_5lacp")
+region = Rect2(32, 0, 32, 32)
+
+[resource]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1sf5q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4faq6")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
