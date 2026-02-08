@@ -18,6 +18,8 @@ func _create_board():
 			var cell: Node2D= cell_scene.instantiate()
 			add_child(cell)
 			cell.position = Vector2(x * _board_stats.cell_size, y * _board_stats.cell_size)
+			
+			@warning_ignore("integer_division")
 			cell.scale = Vector2.ONE * (_board_stats.cell_size / 32)
 
 func _delete_board():
@@ -29,11 +31,6 @@ func _delete_board():
 func _ready() -> void:
 	_board_stats.changed.connect(_on_board_stats_changed)
 	_on_board_stats_changed()
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 	
 func _draw() -> void:
 	if Engine.is_editor_hint():

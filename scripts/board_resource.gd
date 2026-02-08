@@ -3,7 +3,7 @@
 extends Resource
 class_name BoardResource
 
-@export_range(3, 27, 3)
+@export_range(3, 27, 2)
 var size_x: int = 3:
 	get:
 		return size_x
@@ -11,7 +11,7 @@ var size_x: int = 3:
 		size_x = value
 		emit_changed()
 
-@export_range(3, 27, 3)
+@export_range(3, 27, 2)
 var size_y: int = 3:
 	get:
 		return size_y

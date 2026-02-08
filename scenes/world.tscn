@@ -6,6 +6,5 @@
 [node name="World" type="Node2D" unique_id=571766068]
 
 [node name="Board" type="Node2D" parent="." unique_id=1632137332]
-position = Vector2(26, 22)
 script = ExtResource("1_nnsk1")
 _board_stats = ExtResource("2_rwgxs")
