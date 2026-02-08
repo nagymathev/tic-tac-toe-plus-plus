@@ -11,14 +11,51 @@ public partial class Board : Node2D
 
 	private void OnBoardResourceChanged()
 	{
-		GD.Print("[Board] Running OnBoardResourceChanged");
+		GD.Print("[Board](OnBoardResourceChanged) Running OnBoardResourceChanged");
 		_eventcalls++;
+		if (_boardStats == null)
+		{
+			ConnectBoardStats();
+		}
 		RemoveBoard();
 		CreateBoard();
 		QueueRedraw();
-		GD.Print(_eventcalls);
-		GD.Print("[Board] ", BoardSettings.Instance.GetSignalConnectionList(BoardSettings.SignalName.BoardStatsChanged));
-		GD.Print("---------------------------------------------------------------------------------------------------");
+		GD.Print("[Board](OnBoardResourceChanged) ", _eventcalls);
+	}
+
+	/// <summary>
+	/// Returns <c>true</c> if new connection, <c>false</c> if it's already connected.
+	/// </summary>
+	/// <returns></returns>
+	private bool ConnectBoardStats()
+	{
+		GD.Print("[Board](ConnectBoardStats) Loading and Connecting to <BoardResource>");
+		_boardStats = GD.Load<BoardResource>("res://resources/board_resource_default.tres");
+		if (_boardStats == null)
+		{
+			GD.Print("[Board](ConnectBoardStats) Failed to load <BoardResource>");
+		}
+
+		GD.Print("[Board](ConnectBoardStats) Printing BEGIN SignalConnectionList nodes...");
+		var alreadyInList = false;
+		foreach (var dict in _boardStats.GetSignalConnectionList(BoardResource.SignalName.Changed))
+		{
+			var nodeInList = ((Callable)dict["callable"]).Target;
+			GD.Print($"[Board](ConnectBoardStats)<SignalConnectionList> {nodeInList}");
+			alreadyInList = nodeInList == this;
+			break;
+		}
+		GD.Print("[Board](ConnectBoardStats) Printing END");
+
+		if (alreadyInList)
+		{
+			GD.Print("[Board](ConnectBoardStats) Already connected to <Changed>, aborting connection...");
+			return false;
+		}
+		GD.Print("[Board](ConnectBoardStats) Not yet connected to <Changed>, connecting...");
+		_boardStats.Connect(BoardResource.SignalName.Changed, Callable.From(OnBoardResourceChanged));
+		GD.Print("[Board](ConnectBoardStats) Connection Count: ", _boardStats.GetSignalConnectionList(BoardResource.SignalName.Changed).Count);
+		return true;
 	}
 
 	private void CreateBoard()
@@ -41,24 +78,25 @@ public partial class Board : Node2D
 		var children = GetChildren();
 		children.ToList().ForEach(child => RemoveChild(child));
 	}
-	
+
+	public override void _EnterTree()
+	{
+		GD.Print("[Board](_EnterTree) Enters tree.");
+	}
+
 	public override void _ExitTree()
 	{
-		GD.Print("[Board] Exiting Tree. Removing callback from Board...");
-		// BoardSettings.Instance.BoardStatsChanged -= OnBoardResourceChanged;
-		GD.Print("[Board] ", BoardSettings.Instance.GetSignalConnectionList(BoardSettings.SignalName.BoardStatsChanged));
-		GD.Print("---------------------------------------------------------------------------------------------------");
+		GD.Print("[Board](_ExitTree) Exiting Tree.");
 	}
 
 	public override void _Ready()
 	{
-		GD.Print("[Board] Ready. Connecting to BoardStatsChanged...");
-		_boardStats = BoardSettings.Instance.BoardStats;
-		BoardSettings.Instance.BoardStatsChanged += OnBoardResourceChanged;
-		// I think this causes some NullPointerExeptions when rebuilding the project while editor is running.
-		// TODO: This gets called multiple times actually, need to figure out why
-		OnBoardResourceChanged();
-		GD.Print("---------------------------------------------------------------------------------------------------");
+		GD.Print("[Board](_Ready) Ready.");
+		var newConnection = ConnectBoardStats();
+		if (newConnection)
+		{
+			OnBoardResourceChanged();
+		}
 	}
 
 	public override void _Process(double delta)

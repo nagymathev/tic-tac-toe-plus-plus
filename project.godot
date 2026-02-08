@@ -15,10 +15,6 @@ run/main_scene="uid://docledg5rrvat"
 config/features=PackedStringArray("4.6", "C#", "Mobile")
 config/icon="res://icon.svg"
 
-[autoload]
-
-BoardSettings="*uid://cslyjuse1bjtu"
-
 [display]
 
 window/size/viewport_width=1920

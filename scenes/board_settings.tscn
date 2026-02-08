@@ -1,8 +1,0 @@
-[gd_scene format=3 uid="uid://cslyjuse1bjtu"]
-
-[ext_resource type="Script" uid="uid://mw1l8odop63a" path="res://scripts/BoardSettings.cs" id="1_e76e3"]
-[ext_resource type="Resource" uid="uid://b3pannjy6njqt" path="res://resources/board_resource_default.tres" id="2_0h28l"]
-
-[node name="BoardSettings" type="Node" unique_id=2145505146]
-script = ExtResource("1_e76e3")
-BoardStats = ExtResource("2_0h28l")
