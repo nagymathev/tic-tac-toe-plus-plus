@@ -61,7 +61,6 @@ func _process(_delta: float) -> void:
 			set_frame_state(FrameStates.Hover)
 	
 func _pressed():
-	print("pressed")
 	current_state = (int(current_state) + 1) % 3 as CellStates
 	set_cell_state(current_state)
 

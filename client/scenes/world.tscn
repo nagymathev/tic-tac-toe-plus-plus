@@ -1,10 +1,8 @@
 [gd_scene format=3 uid="uid://bos73gp8ebmm2"]
 
-[ext_resource type="Script" uid="uid://pdcmelomujlj" path="res://scripts/board.gd" id="1_nnsk1"]
-[ext_resource type="Resource" uid="uid://bmgv1s8gq56nr" path="res://resources/board_settings_default.tres" id="2_rwgxs"]
+[ext_resource type="PackedScene" uid="uid://bnud2xpf6meyc" path="res://scenes/board.tscn" id="1_nnsk1"]
 
 [node name="World" type="Node2D" unique_id=571766068]
 
-[node name="Board" type="Node2D" parent="." unique_id=1632137332]
-script = ExtResource("1_nnsk1")
-_board_stats = ExtResource("2_rwgxs")
+[node name="Board" parent="." unique_id=214929490 instance=ExtResource("1_nnsk1")]
+position = Vector2(274, 159)

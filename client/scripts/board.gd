@@ -5,8 +5,10 @@ class_name Board
 
 # Manages all the rendering side of the game. Is not concerned with data.
 
+@onready var _cell_render: Node2D = $CellRender
+
 @export var _board_stats: BoardSettings
-@export var _board_checker: BoardManager
+@export var _board_manager: BoardManager
 
 func _on_board_stats_changed():
 	print("[Board] Stats Changed")
@@ -19,14 +21,14 @@ func _create_board():
 	for y in _board_stats.size_y:
 		for x in _board_stats.size_x:
 			var cell: Node2D= cell_scene.instantiate()
-			add_child(cell)
+			_cell_render.add_child(cell)
 			cell.position = Vector2(x * _board_stats.cell_size * _board_stats.cell_scale, y * _board_stats.cell_size * _board_stats.cell_scale)
 			
 			@warning_ignore("integer_division")
 			cell.scale = Vector2.ONE * _board_stats.cell_scale
 
 func _delete_board():
-	var children = get_children()
+	var children := _cell_render.get_children()
 	for child in children:
 		remove_child(child)
 

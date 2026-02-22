@@ -19,6 +19,7 @@ sprite_frames = ExtResource("3_ked58")
 [node name="Area2D" type="Area2D" parent="CellFrame" unique_id=2142165066]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CellFrame/Area2D" unique_id=719690670]
+visible = false
 shape = SubResource("RectangleShape2D_0vake")
 
 [node name="CellXO" type="AnimatedSprite2D" parent="CellFrame" unique_id=351564349]

@@ -24,6 +24,10 @@ window/size/viewport_height=1080
 
 project/assembly_name="tictactoe-plusplus"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/awaitable_http_request/plugin.cfg", "res://addons/nine_patch_sprite_2d/plugin.cfg")
+
 [input]
 
 ClickCell={
@@ -41,3 +45,4 @@ ClickCell={
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
+environment/defaults/default_clear_color=Color(0.2336, 0.2768, 0.32, 1)
