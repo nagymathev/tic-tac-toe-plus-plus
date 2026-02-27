@@ -1,6 +1,6 @@
 class_name BoardManager extends Node
 
-# Manages the board and it's associated state. It checks for winners and related events.
+# # Manages the board and it's associated state. It checks for winners and related events.
 
 var players := ["-", "X", "O"]
 
@@ -23,11 +23,11 @@ var _chunks: Array = []
 func get_current_player() -> Player:
 	var json := await _request_json_from("/currentplayer")
 	match json["player"]:
-		players[0]:
+		'-':
 			return Player.Empty
-		players[1]:
+		'X':
 			return Player.PlayerOne
-		players[2]:
+		'O':
 			return Player.PlayerTwo
 		_:
 			return Player.Empty
@@ -44,7 +44,7 @@ func take_turn(player: Player, pos: Vector2) -> void:
 func _create_map(map: Array[Array], settings: BoardSettings) -> void:
 	for y in settings.size_y:
 		for x in settings.size_x:
-			map[y][x] = empty_field
+			map[y][x] = players[0]
 
 ## Request JSON from [param url] where url is the part after host.
 ## Example: "http://localhost:3000/index", the url is: "/index".
@@ -66,6 +66,7 @@ func _request_json_from(url: String) -> Dictionary:
 	print("[BoardManager](_request_json_from) Full JSON data: ", json)
 	return json
 
-func _ready() -> void:
-	_request_json_from("/")
-	print(Player.keys()[await get_current_player()])
+# func _ready() -> void:
+# 	pass
+# 	# _request_json_from("/")
+# 	# print(Player.keys()[await get_current_player()])

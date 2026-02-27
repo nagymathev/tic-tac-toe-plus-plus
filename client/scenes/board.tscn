@@ -6,9 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://d37akbsp3dhom" path="res://assets/board-border-frame.png" id="3_nglv8"]
 [ext_resource type="Script" uid="uid://ywn6yajgscrr" path="res://scripts/board_manager.gd" id="5_dxjtj"]
 
-[node name="Board" type="Node2D" unique_id=214929490]
+[node name="Board" type="Node2D" unique_id=214929490 node_paths=PackedStringArray("_board_manager")]
 script = ExtResource("1_tx6nw")
 _board_stats = ExtResource("2_nglv8")
+_board_manager = NodePath("BoardManager")
 
 [node name="CellRender" type="Node2D" parent="." unique_id=1806610109]
 
