@@ -5,6 +5,7 @@
 [ext_resource type="Script" uid="uid://c2j1qdkvd1cjs" path="res://addons/nine_patch_sprite_2d/nine_patch_sprite_2d.gd" id="3_fv4ni"]
 [ext_resource type="Texture2D" uid="uid://d37akbsp3dhom" path="res://assets/board-border-frame.png" id="3_nglv8"]
 [ext_resource type="Script" uid="uid://ywn6yajgscrr" path="res://scripts/board_manager.gd" id="5_dxjtj"]
+[ext_resource type="PackedScene" uid="uid://t1154idky767" path="res://scenes/board_cell.tscn" id="6_dun80"]
 
 [node name="Board" type="Node2D" unique_id=214929490 node_paths=PackedStringArray("_board_manager")]
 script = ExtResource("1_tx6nw")
@@ -29,3 +30,12 @@ metadata/_custom_type_script = "uid://c2j1qdkvd1cjs"
 [node name="BoardManager" type="Node" parent="." unique_id=870770461]
 script = ExtResource("5_dxjtj")
 metadata/_custom_type_script = "uid://ywn6yajgscrr"
+
+[node name="InfoCells" type="Node2D" parent="." unique_id=1409461498]
+position = Vector2(606, 0)
+scale = Vector2(8, 8)
+
+[node name="MyPlayer" parent="InfoCells" unique_id=33723157 instance=ExtResource("6_dun80")]
+
+[node name="CurrentPlayer" parent="InfoCells" unique_id=2123742801 instance=ExtResource("6_dun80")]
+position = Vector2(0, 48)

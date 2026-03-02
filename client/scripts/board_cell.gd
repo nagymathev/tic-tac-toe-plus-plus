@@ -1,7 +1,6 @@
 @tool
 
-extends Node2D
-class_name BoardCell
+class_name BoardCell extends Node2D
 
 @onready var cell_frame: AnimatedSprite2D = $CellFrame
 @onready var cell_xo: AnimatedSprite2D = $CellFrame/CellXO
@@ -10,8 +9,11 @@ class_name BoardCell
 
 @export var _board_settings: BoardSettings
 
+var board_pos: Vector2i
 var is_hover := false
 var current_state := CellStates.None
+
+signal clicked(pos: Vector2i)
 
 enum FrameStates {
 	Normal,
@@ -52,13 +54,6 @@ func _ready() -> void:
 			cell_xo.sprite_frames = _board_settings.cell_xo_sprite_frames
 	
 	set_cell_state(CellStates.None)
-
-func _process(_delta: float) -> void:
-	if !Engine.is_editor_hint():
-		if (is_hover and Input.is_mouse_button_pressed(MouseButton.MOUSE_BUTTON_LEFT)):
-			set_frame_state(FrameStates.Pressed)
-		elif (is_hover and !Input.is_mouse_button_pressed(MouseButton.MOUSE_BUTTON_LEFT)):
-			set_frame_state(FrameStates.Hover)
 	
 func _pressed():
 	current_state = (int(current_state) + 1) % 3 as CellStates
@@ -66,7 +61,11 @@ func _pressed():
 
 func _on_input(_viewport: Node, event: InputEvent, _shape_idx: int):
 	if event.is_action_pressed("ClickCell"):
+		clicked.emit(board_pos)
+		set_frame_state(FrameStates.Pressed)
 		_pressed()
+	if event.is_action_released("ClickCell"):
+		set_frame_state(FrameStates.Hover)
 
 func _on_mouse_entered():
 	is_hover = true
