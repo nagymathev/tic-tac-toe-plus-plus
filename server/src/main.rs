@@ -3,13 +3,15 @@ mod game;
 use std::sync::Arc;
 
 use axum::{
-    Extension, Router, extract, http::StatusCode, response, routing::{get, post},
-    Json,
+    Extension, Json, Router, extract,
+    http::StatusCode,
+    response,
+    routing::{get, post},
 };
 
 use axum_macros::debug_handler;
+use serde::{Deserialize, Serialize};
 use serde_json::{Value, json};
-use serde::{Serialize, Deserialize};
 use tokio::sync::Mutex;
 use uuid::Uuid;
 
@@ -25,7 +27,7 @@ struct State {
 
 impl State {
     fn new() -> Self {
-        State { 
+        State {
             board: game::Board::new(),
         }
     }
@@ -48,14 +50,19 @@ async fn main() {
 
 async fn register(state: Extension<Arc<Mutex<State>>>) -> Json<Value> {
     let id = Uuid::new_v4();
-    println!("[{}] new registered user: {}", chrono::Local::now(), &id);
 
     let mut state = state.lock().await;
-    state.board.add_player(id);
-    state.board.next_player();
+    let player_type = state.board.add_player(id);
+    println!(
+        "[{}] new registered user: {}, with PlayerType: {:#?}",
+        chrono::Local::now(),
+        &id,
+        player_type
+    );
     Json(json!(
         {
-            "id": id
+            "id": id,
+            "player_type": player_type,
         }
     ))
 }
@@ -65,10 +72,9 @@ async fn health_check(Json(data): Json<Value>) -> StatusCode {
 }
 
 #[debug_handler]
-async fn turn(state: Extension<Arc<Mutex<State>>>, Json(pos): Json<TurnData>) -> StatusCode {
+async fn turn(state: Extension<Arc<Mutex<State>>>, Json(data): Json<TurnData>) -> StatusCode {
     let mut state = state.lock().await;
-    state.board.turn(pos.id, &pos.pos);
-    state.board.next_player();
+    state.board.turn(data.id, &data.pos);
     StatusCode::OK
 }
 

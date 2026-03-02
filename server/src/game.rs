@@ -4,6 +4,22 @@ use axum::http::StatusCode;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
+#[derive(Serialize, Debug)]
+pub enum PlayerType {
+    PlayerX,
+    PlayerO,
+    Spectator,
+}
+
+// There has to be a better way.
+pub fn make_player_type(e: u8) -> PlayerType {
+    match e {
+        0 => PlayerType::PlayerX,
+        1 => PlayerType::PlayerO,
+        _ => PlayerType::Spectator,
+    }
+}
+
 #[derive(Deserialize)]
 pub struct Pos {
     x: usize,
@@ -13,7 +29,7 @@ pub struct Pos {
 #[derive(Serialize)]
 pub struct Board {
     players: [char; 2],
-    players_hashed: HashMap<char, Uuid>,
+    players_hashed: HashMap<Uuid, char>,
     current_player: usize,
     board: [[char; 3]; 3],
 }
@@ -24,54 +40,71 @@ impl Board {
             players: ['X', 'O'],
             players_hashed: HashMap::new(),
             current_player: 0,
-            board: [
-                ['_','_','_',],
-                ['_','_','_',],
-                ['_','_','_',],
-            ],
+            board: [['_', '_', '_'], ['_', '_', '_'], ['_', '_', '_']],
         }
     }
 
-    pub fn add_player(&mut self, id: Uuid) {
-        self.players_hashed.insert(self.players[self.current_player], id);
+    pub fn add_player(&mut self, id: Uuid) -> PlayerType {
+        let len = self.players_hashed.len();
+        if len < 2 {
+            self.players_hashed.insert(id, self.players[len]);
+            let player_type = make_player_type(len as u8);
+            return player_type;
+        }
+        println!("Player capacity reached! Player added as a Spectator!");
+        return PlayerType::Spectator;
     }
 
     pub fn next_player(&mut self) {
         self.current_player = (self.current_player + 1) % self.players.len();
     }
 
-    pub fn turn(&mut self, id: Uuid, pos: &Pos) -> StatusCode {
-        if self.players_hashed[&self.players[self.current_player]] == id {
+    pub fn turn(&mut self, id: Uuid, pos: &Pos) {
+        if self.players_hashed[&id] == self.players[self.current_player] {
+            // TODO: Add checking for already occupied cell.
             self.board[pos.y][pos.x] = self.players[self.current_player];
-            return StatusCode::OK
+
+            // TODO: Return something instead to notify the client.
+            if let Some(winner) = self.check_for_winner() {
+                println!("Winner is: {winner}!");
+            }
+            self.next_player();
+            return;
         }
         println!("Someone turned without permissions: {id}");
-        StatusCode::FORBIDDEN
     }
 
     pub fn check_for_winner(&self) -> Option<char> {
         let mut winner: Option<char> = None;
         // Check Rows
         for y in 0..self.board.len() {
-            if Self::eq_three(self.board[y][0], self.board[y][1], self.board[y][2]) {
+            if self.board[y][0] != '_'
+                && Self::eq_three(self.board[y][0], self.board[y][1], self.board[y][2])
+            {
                 winner = Some(self.board[y][0]);
                 break;
             }
         }
 
-         // Check Columns
+        // Check Columns
         for x in 0..self.board.len() {
-            if Self::eq_three(self.board[0][x], self.board[1][x], self.board[2][x]) {
+            if self.board[0][x] != '_'
+                && Self::eq_three(self.board[0][x], self.board[1][x], self.board[2][x])
+            {
                 winner = Some(self.board[0][x]);
                 break;
             }
         }
 
         // Check Diagonals
-        if Self::eq_three(self.board[0][0], self.board[1][1], self.board[2][2]) {
+        if self.board[0][0] != '_'
+            && Self::eq_three(self.board[0][0], self.board[1][1], self.board[2][2])
+        {
             winner = Some(self.board[0][0]);
         }
-        if Self::eq_three(self.board[2][0], self.board[1][1], self.board[0][2]) {
+        if self.board[2][0] != '_'
+            && Self::eq_three(self.board[2][0], self.board[1][1], self.board[0][2])
+        {
             winner = Some(self.board[2][0]);
         }
 
@@ -80,11 +113,11 @@ impl Board {
 
     fn eq_three<T>(a: T, b: T, c: T) -> bool
     where
-        T: PartialEq
-     {
+        T: PartialEq,
+    {
         if a == b && b == c && a == c {
-            return true
+            return true;
         }
-        return false
+        return false;
     }
 }
