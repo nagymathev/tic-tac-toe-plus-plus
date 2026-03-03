@@ -10,22 +10,16 @@ class_name BoardCell extends Control
 @onready var player_texture_rect = $BackgroundButton/TextureRect
 
 var board_pos: Vector2i
-var current_state := CellStates.None
+var current_state := BoardData.PlayerStates.Spectator
 
 signal clicked(pos: Vector2i)
 
-enum CellStates {
-	None,
-	X,
-	O
-}
-
-func set_cell_state(state: CellStates):
+func set_cell_state(state: BoardData.PlayerStates):
 	match state:
-		CellStates.X:
+		BoardData.PlayerStates.PlayerX:
 			player_texture_rect.visible = true
 			player_texture_rect.texture = playerX_texture
-		CellStates.O:
+		BoardData.PlayerStates.PlayerO:
 			player_texture_rect.visible = true
 			player_texture_rect.texture = playerO_texture
 		_:
@@ -36,7 +30,7 @@ func set_cell_state(state: CellStates):
 func _ready() -> void:
 	button.pressed.connect(_on_button_pressed)
 
-	set_cell_state(CellStates.None)
+	set_cell_state(BoardData.PlayerStates.Spectator)
 
 func _on_button_pressed():
 	clicked.emit(board_pos)

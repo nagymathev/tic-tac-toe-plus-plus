@@ -4,19 +4,13 @@ class_name BoardManager extends Node
 
 var players := ["_", "X", "O"]
 
-enum PlayerType {
-	PlayerX,
-	PlayerO,
-	Spectator,
-}
-
 @export_category("Networking")
 @export
 var _host := "http://localhost:3000"
 
 ## UUID for the player given by the server.
 var id: String = ""
-var player_type: PlayerType = PlayerType.Spectator
+var player_type := BoardData.PlayerStates.Spectator
 
 func take_turn(pos: Vector2i) -> void:
 	var json := {
@@ -28,17 +22,17 @@ func take_turn(pos: Vector2i) -> void:
 	}
 	_post_json_to("/turn", json)
 
-func register() -> PlayerType:
+func register() -> BoardData.PlayerStates:
 	var json := await _request_json_from("/register")
 	id = json["id"]
 	match json["player_type"]:
 		"PlayerX":
-			player_type = PlayerType.PlayerX
+			player_type = BoardData.PlayerStates.PlayerX
 		"PlayerO":
-			player_type = PlayerType.PlayerO
+			player_type = BoardData.PlayerStates.PlayerO
 		_:
-			player_type = PlayerType.Spectator
-	print("Successfully registered with id: " + id + "; Assigned Player Type: " + PlayerType.keys()[player_type])
+			player_type = BoardData.PlayerStates.Spectator
+	print("Successfully registered with id: " + id + "; Assigned Player Type: " + BoardData.PlayerStates.keys()[player_type])
 	return player_type
 
 func health_check() -> Dictionary:

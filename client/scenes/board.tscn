@@ -2,47 +2,32 @@
 
 [ext_resource type="Script" uid="uid://pdcmelomujlj" path="res://scripts/board.gd" id="1_fv4ni"]
 [ext_resource type="Resource" uid="uid://bmgv1s8gq56nr" path="res://resources/board_settings_default.tres" id="2_dxjtj"]
+[ext_resource type="Resource" uid="uid://qjrc4gcen1lf" path="res://resources/board_data.tres" id="3_dxjtj"]
 [ext_resource type="StyleBox" uid="uid://e7wjqlec0hpf" path="res://resources/theme/border_style_box.tres" id="4_dun80"]
-[ext_resource type="PackedScene" uid="uid://t1154idky767" path="res://scenes/board_cell.tscn" id="4_dxjtj"]
 [ext_resource type="Script" uid="uid://ywn6yajgscrr" path="res://scripts/board_manager.gd" id="5_dxjtj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxjtj"]
+draw_center = false
 
 [node name="Board" type="PanelContainer" unique_id=511984334 node_paths=PackedStringArray("_board_manager")]
 offset_right = 72.0
 offset_bottom = 72.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dxjtj")
 script = ExtResource("1_fv4ni")
 _board_stats = ExtResource("2_dxjtj")
 _board_manager = NodePath("BoardManager")
+_board_data = ExtResource("3_dxjtj")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=856037044]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="BoardPanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=1777449179]
+[node name="BoardPanelContainer" type="PanelContainer" parent="." unique_id=1777449179]
 layout_mode = 2
 theme_override_styles/panel = ExtResource("4_dun80")
 
-[node name="CellRender" type="GridContainer" parent="HBoxContainer/BoardPanelContainer" unique_id=125465585]
+[node name="CellRender" type="GridContainer" parent="BoardPanelContainer" unique_id=125465585]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
 columns = 3
-
-[node name="InfoPanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=2055916440]
-layout_mode = 2
-theme_override_styles/panel = ExtResource("4_dun80")
-
-[node name="InfoPanel" type="VBoxContainer" parent="HBoxContainer/InfoPanelContainer" unique_id=556144855]
-layout_mode = 2
-theme_override_constants/separation = 24
-
-[node name="MyPlayer" parent="HBoxContainer/InfoPanelContainer/InfoPanel" unique_id=873196890 instance=ExtResource("4_dxjtj")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="CurrentPlayer" parent="HBoxContainer/InfoPanelContainer/InfoPanel" unique_id=880806279 instance=ExtResource("4_dxjtj")]
-unique_name_in_owner = true
-layout_mode = 2
 
 [node name="BoardManager" type="Node" parent="." unique_id=870770461]
 script = ExtResource("5_dxjtj")

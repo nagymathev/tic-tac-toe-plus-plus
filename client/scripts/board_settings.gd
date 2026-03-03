@@ -18,12 +18,6 @@ var size_y: int = 3:
 		size_y = value
 		emit_changed()
 
-@export
-var cell_sprite_frames: SpriteFrames
-
-@export
-var cell_xo_sprite_frames: SpriteFrames
-
 @export_range(8, 128, 8, "prefer_slider")
 var cell_size: int = 24:
 	get:

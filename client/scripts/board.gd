@@ -9,6 +9,7 @@ var cells: Array[Array]
 
 @export var _board_stats: BoardSettings
 @export var _board_manager: BoardManager
+@export var _board_data: BoardData
 
 func _on_board_stats_changed():
 	print("[Board] Stats Changed")
@@ -36,11 +37,11 @@ func _update_board(data: Array) -> void:
 			var cell = cells[y][x]
 			match data[y][x]:
 				"X":
-					cell.set_cell_state(BoardCell.CellStates.X)
+					cell.set_cell_state(BoardData.PlayerStates.PlayerX)
 				"O":
-					cell.set_cell_state(BoardCell.CellStates.O)
+					cell.set_cell_state(BoardData.PlayerStates.PlayerO)
 				_:
-					cell.set_cell_state(BoardCell.CellStates.None)
+					cell.set_cell_state(BoardData.PlayerStates.Spectator)
 
 func _delete_board():
 	var children := _cell_render.get_children()
@@ -55,19 +56,18 @@ func _ready() -> void:
 
 	if !Engine.is_editor_hint():
 		var player_type := await _board_manager.register()
-		var my_player: BoardCell = %MyPlayer as BoardCell
 		match player_type:
-			BoardManager.PlayerType.PlayerX:
-				my_player.set_cell_state(BoardCell.CellStates.X)
-			BoardManager.PlayerType.PlayerO:
-				my_player.set_cell_state(BoardCell.CellStates.O)
+			BoardData.PlayerStates.PlayerX:
+				_board_data.my_player = BoardData.PlayerStates.PlayerX
+			BoardData.PlayerStates.PlayerO:
+				_board_data.my_player = BoardData.PlayerStates.PlayerO
 			_:
-				my_player.set_cell_state(BoardCell.CellStates.None)
+				_board_data.my_player = BoardData.PlayerStates.Spectator
 
 		var timer := Timer.new()
 		add_child(timer)
 		timer.timeout.connect(_on_health_check)
-		timer.wait_time = 1.0/60.0
+		timer.wait_time = 10.0/60.0
 		timer.start()
 
 # func _draw() -> void:
@@ -80,20 +80,18 @@ func _ready() -> void:
 func _on_cell_pressed(pos: Vector2i):
 	print("[Board] Cell pressed")
 	_board_manager.take_turn(pos)
+	_on_health_check()
 
 func _on_health_check():
 	var board_data := await _board_manager.health_check()
 	var players: Array = board_data["players"]
-	print(players)
 	var current_player: int = board_data["current_player"]
-	print(current_player)
-	var current_player_cell: BoardCell = %CurrentPlayer as BoardCell
 	match players[current_player]:
 		"X":
-			current_player_cell.set_cell_state(BoardCell.CellStates.X)
+			_board_data.current_player = BoardData.PlayerStates.PlayerX
 		"O":
-			current_player_cell.set_cell_state(BoardCell.CellStates.O)
+			_board_data.current_player = BoardData.PlayerStates.PlayerO
 		_:
-			current_player_cell.set_cell_state(BoardCell.CellStates.None)
+			_board_data.current_player = BoardData.PlayerStates.Spectator
 
 	_update_board(board_data["board"])
