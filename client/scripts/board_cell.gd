@@ -1,25 +1,18 @@
 @tool
 
-class_name BoardCell extends Node2D
+class_name BoardCell extends Control
 
-@onready var cell_frame: AnimatedSprite2D = $CellFrame
-@onready var cell_xo: AnimatedSprite2D = $CellFrame/CellXO
-@onready var area2d: Area2D = $CellFrame/Area2D
-@onready var collision_shape2d: CollisionShape2D = $CellFrame/Area2D/CollisionShape2D
-
+@export var playerO_texture: Texture
+@export var playerX_texture: Texture
 @export var _board_settings: BoardSettings
 
+@onready var button = $BackgroundButton
+@onready var player_texture_rect = $BackgroundButton/TextureRect
+
 var board_pos: Vector2i
-var is_hover := false
 var current_state := CellStates.None
 
 signal clicked(pos: Vector2i)
-
-enum FrameStates {
-	Normal,
-	Hover,
-	Pressed
-}
 
 enum CellStates {
 	None,
@@ -27,50 +20,23 @@ enum CellStates {
 	O
 }
 
-func set_frame_state(state: FrameStates):
-	cell_frame.frame = state
-
 func set_cell_state(state: CellStates):
 	match state:
-		CellStates.None:
-			cell_xo.visible = false
+		CellStates.X:
+			player_texture_rect.visible = true
+			player_texture_rect.texture = playerX_texture
+		CellStates.O:
+			player_texture_rect.visible = true
+			player_texture_rect.texture = playerO_texture
 		_:
-			cell_xo.visible = true
-			cell_xo.frame = state - 1
+			player_texture_rect.visible = false
+
 	current_state = state
 
 func _ready() -> void:
-	area2d.mouse_entered.connect(_on_mouse_entered)
-	area2d.mouse_exited.connect(_on_mouse_exited)
-	area2d.input_event.connect(_on_input)
-	
-	if _board_settings:
-		cell_frame.position = Vector2.ONE * _board_settings.cell_size * 0.5
-		(collision_shape2d.shape as RectangleShape2D).size = Vector2.ONE * _board_settings.cell_size
-		if _board_settings.cell_sprite_frames:
-			cell_frame.sprite_frames = _board_settings.cell_sprite_frames
-			
-		if _board_settings.cell_xo_sprite_frames:
-			cell_xo.sprite_frames = _board_settings.cell_xo_sprite_frames
-	
+	button.pressed.connect(_on_button_pressed)
+
 	set_cell_state(CellStates.None)
-	
-func _pressed():
-	current_state = (int(current_state) + 1) % 3 as CellStates
-	set_cell_state(current_state)
 
-func _on_input(_viewport: Node, event: InputEvent, _shape_idx: int):
-	if event.is_action_pressed("ClickCell"):
-		clicked.emit(board_pos)
-		set_frame_state(FrameStates.Pressed)
-		_pressed()
-	if event.is_action_released("ClickCell"):
-		set_frame_state(FrameStates.Hover)
-
-func _on_mouse_entered():
-	is_hover = true
-	set_frame_state(FrameStates.Hover)
-	
-func _on_mouse_exited():
-	is_hover = false
-	set_frame_state(FrameStates.Normal)
+func _on_button_pressed():
+	clicked.emit(board_pos)

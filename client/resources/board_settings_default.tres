@@ -8,4 +8,3 @@
 script = ExtResource("1_1556n")
 cell_sprite_frames = ExtResource("1_rh7re")
 cell_xo_sprite_frames = ExtResource("2_keq10")
-cell_scale = 8

@@ -1,27 +1,28 @@
 [gd_scene format=3 uid="uid://t1154idky767"]
 
 [ext_resource type="Script" uid="uid://bx10x6hwhq4j0" path="res://scripts/board_cell.gd" id="1_0vake"]
+[ext_resource type="Texture2D" uid="uid://dxk0owhecj3oq" path="res://assets/cell/play_o.png" id="2_fd5yo"]
 [ext_resource type="Resource" uid="uid://bmgv1s8gq56nr" path="res://resources/board_settings_default.tres" id="2_ked58"]
-[ext_resource type="SpriteFrames" uid="uid://bblu1v8rqlln3" path="res://resources/cell_frame_24_sprite_frame.tres" id="3_ked58"]
-[ext_resource type="SpriteFrames" uid="uid://dsgquww8aiesq" path="res://resources/cell_xo_24_sprite_frame.tres" id="4_wvn1a"]
+[ext_resource type="Texture2D" uid="uid://c6iosj77hwl64" path="res://assets/cell/board_cell_normal.png" id="3_fd5yo"]
+[ext_resource type="Texture2D" uid="uid://bu0atxfuw46dq" path="res://assets/cell/board_cell_pressed.png" id="4_pnt0r"]
+[ext_resource type="Texture2D" uid="uid://6at5m7hsc0jw" path="res://assets/cell/board_cell_hover.png" id="5_ehih1"]
+[ext_resource type="Texture2D" uid="uid://b3o6ppi1vhxe8" path="res://assets/cell/play_x.png" id="6_iy72k"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_0vake"]
-size = Vector2(24, 24)
-
-[node name="Cell" type="Node2D" unique_id=33723157]
+[node name="Cell" type="AspectRatioContainer" unique_id=873196890]
 script = ExtResource("1_0vake")
+playerO_texture = ExtResource("2_fd5yo")
+playerX_texture = ExtResource("6_iy72k")
 _board_settings = ExtResource("2_ked58")
 
-[node name="CellFrame" type="AnimatedSprite2D" parent="." unique_id=1704510305]
-position = Vector2(12, 12)
-sprite_frames = ExtResource("3_ked58")
+[node name="BackgroundButton" type="TextureButton" parent="." unique_id=1971803156]
+layout_mode = 2
+texture_normal = ExtResource("3_fd5yo")
+texture_pressed = ExtResource("4_pnt0r")
+texture_hover = ExtResource("5_ehih1")
 
-[node name="Area2D" type="Area2D" parent="CellFrame" unique_id=2142165066]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CellFrame/Area2D" unique_id=719690670]
+[node name="TextureRect" type="TextureRect" parent="BackgroundButton" unique_id=1380639007]
 visible = false
-shape = SubResource("RectangleShape2D_0vake")
-
-[node name="CellXO" type="AnimatedSprite2D" parent="CellFrame" unique_id=351564349]
-visible = false
-sprite_frames = ExtResource("4_wvn1a")
+layout_mode = 0
+offset_right = 24.0
+offset_bottom = 24.0
+texture = ExtResource("6_iy72k")

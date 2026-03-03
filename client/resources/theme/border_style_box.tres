@@ -1,0 +1,11 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://e7wjqlec0hpf"]
+
+[ext_resource type="Texture2D" uid="uid://d37akbsp3dhom" path="res://assets/board-border-frame.png" id="1_3sbdj"]
+
+[resource]
+texture = ExtResource("1_3sbdj")
+texture_margin_left = 1.0
+texture_margin_top = 1.0
+texture_margin_right = 1.0
+texture_margin_bottom = 1.0
+region_rect = Rect2(0, 0, 24, 24)

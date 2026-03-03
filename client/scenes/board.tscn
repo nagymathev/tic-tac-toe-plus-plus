@@ -1,41 +1,49 @@
 [gd_scene format=3 uid="uid://bnud2xpf6meyc"]
 
-[ext_resource type="Script" uid="uid://pdcmelomujlj" path="res://scripts/board.gd" id="1_tx6nw"]
-[ext_resource type="Resource" uid="uid://bmgv1s8gq56nr" path="res://resources/board_settings_default.tres" id="2_nglv8"]
-[ext_resource type="Script" uid="uid://c2j1qdkvd1cjs" path="res://addons/nine_patch_sprite_2d/nine_patch_sprite_2d.gd" id="3_fv4ni"]
-[ext_resource type="Texture2D" uid="uid://d37akbsp3dhom" path="res://assets/board-border-frame.png" id="3_nglv8"]
+[ext_resource type="Script" uid="uid://pdcmelomujlj" path="res://scripts/board.gd" id="1_fv4ni"]
+[ext_resource type="Resource" uid="uid://bmgv1s8gq56nr" path="res://resources/board_settings_default.tres" id="2_dxjtj"]
+[ext_resource type="StyleBox" uid="uid://e7wjqlec0hpf" path="res://resources/theme/border_style_box.tres" id="4_dun80"]
+[ext_resource type="PackedScene" uid="uid://t1154idky767" path="res://scenes/board_cell.tscn" id="4_dxjtj"]
 [ext_resource type="Script" uid="uid://ywn6yajgscrr" path="res://scripts/board_manager.gd" id="5_dxjtj"]
-[ext_resource type="PackedScene" uid="uid://t1154idky767" path="res://scenes/board_cell.tscn" id="6_dun80"]
 
-[node name="Board" type="Node2D" unique_id=214929490 node_paths=PackedStringArray("_board_manager")]
-script = ExtResource("1_tx6nw")
-_board_stats = ExtResource("2_nglv8")
+[node name="Board" type="PanelContainer" unique_id=511984334 node_paths=PackedStringArray("_board_manager")]
+offset_right = 72.0
+offset_bottom = 72.0
+script = ExtResource("1_fv4ni")
+_board_stats = ExtResource("2_dxjtj")
 _board_manager = NodePath("BoardManager")
 
-[node name="CellRender" type="Node2D" parent="." unique_id=1806610109]
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=856037044]
+layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="Border" type="Node2D" parent="." unique_id=1354501016]
-scale = Vector2(8, 8)
-script = ExtResource("3_fv4ni")
-texture = ExtResource("3_nglv8")
-size = Vector2(74, 74)
-patch_margin_left = 1
-patch_margin_top = 1
-patch_margin_right = 1
-patch_margin_bottom = 1
-centered = false
-offset = Vector2(-1, -1)
-metadata/_custom_type_script = "uid://c2j1qdkvd1cjs"
+[node name="BoardPanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=1777449179]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_dun80")
+
+[node name="CellRender" type="GridContainer" parent="HBoxContainer/BoardPanelContainer" unique_id=125465585]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+columns = 3
+
+[node name="InfoPanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=2055916440]
+layout_mode = 2
+theme_override_styles/panel = ExtResource("4_dun80")
+
+[node name="InfoPanel" type="VBoxContainer" parent="HBoxContainer/InfoPanelContainer" unique_id=556144855]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="MyPlayer" parent="HBoxContainer/InfoPanelContainer/InfoPanel" unique_id=873196890 instance=ExtResource("4_dxjtj")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="CurrentPlayer" parent="HBoxContainer/InfoPanelContainer/InfoPanel" unique_id=880806279 instance=ExtResource("4_dxjtj")]
+unique_name_in_owner = true
+layout_mode = 2
 
 [node name="BoardManager" type="Node" parent="." unique_id=870770461]
 script = ExtResource("5_dxjtj")
 metadata/_custom_type_script = "uid://ywn6yajgscrr"
-
-[node name="InfoCells" type="Node2D" parent="." unique_id=1409461498]
-position = Vector2(606, 0)
-scale = Vector2(8, 8)
-
-[node name="MyPlayer" parent="InfoCells" unique_id=33723157 instance=ExtResource("6_dun80")]
-
-[node name="CurrentPlayer" parent="InfoCells" unique_id=2123742801 instance=ExtResource("6_dun80")]
-position = Vector2(0, 48)
