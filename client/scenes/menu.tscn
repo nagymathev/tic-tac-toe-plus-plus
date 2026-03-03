@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://dur2jwjhbnjdg"]
+
+[ext_resource type="Theme" uid="uid://y02j10pwahu5" path="res://resources/theme/global_theme.tres" id="1_yqeox"]
+
+[node name="Menu" type="CenterContainer" unique_id=987708985]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_yqeox")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1329240753]
+custom_minimum_size = Vector2(400, 200)
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer" unique_id=178611779]
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer" unique_id=1542318776]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "TicTacToe++"
+
+[node name="PlayOnlineButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1542787912]
+layout_mode = 2
+text = "Play Online"
+
+[node name="PlayOfflineButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=896988891]
+layout_mode = 2
+text = "Play Offline"
+
+[node name="SettingsButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=966933465]
+layout_mode = 2
+text = "Settings"
+
+[node name="QuiButton" type="Button" parent="PanelContainer/VBoxContainer" unique_id=1701492686]
+layout_mode = 2
+text = "Quit"

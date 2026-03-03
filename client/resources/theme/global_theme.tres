@@ -1,0 +1,16 @@
+[gd_resource type="Theme" format=3 uid="uid://y02j10pwahu5"]
+
+[ext_resource type="StyleBox" uid="uid://cin8vlsr82cup" path="res://resources/theme/simple_style_box_flat.tres" id="1_cmhjg"]
+[ext_resource type="FontFile" uid="uid://n2pcyoffyi2c" path="res://resources/theme/Plumbum.ttf" id="2_7c7sj"]
+
+[resource]
+default_base_scale = 1.0
+default_font = ExtResource("2_7c7sj")
+default_font_size = 32
+Button/colors/font_color = Color(0.30588236, 0.37254903, 0.40784314, 1)
+Button/styles/normal = ExtResource("1_cmhjg")
+Label/colors/font_color = Color(0.30588236, 0.37254903, 0.40784314, 1)
+Label/colors/font_shadow_color = Color(0.1875, 0.22291666, 0.25, 0.2509804)
+Label/constants/shadow_offset_x = 1
+Label/constants/shadow_offset_y = 1
+PanelContainer/styles/panel = ExtResource("1_cmhjg")

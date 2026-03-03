@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cejkb7fx2cc6a"]
+
+[ext_resource type="Shader" uid="uid://dwnkbl5smtdcg" path="res://shaders/background.gdshader" id="1_y0upk"]
+[ext_resource type="Texture2D" uid="uid://d22hx3bptduh8" path="res://assets/background.png" id="2_jougr"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7r4gi"]
+shader = ExtResource("1_y0upk")
+shader_parameter/tile_factor = Vector2(8, 8)
+
+[node name="Background" type="TextureRect" unique_id=2140569013]
+material = SubResource("ShaderMaterial_7r4gi")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_jougr")

@@ -8,6 +8,7 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxjtj"]
 draw_center = false
+anti_aliasing = false
 
 [node name="Board" type="PanelContainer" unique_id=511984334 node_paths=PackedStringArray("_board_manager")]
 offset_right = 72.0
