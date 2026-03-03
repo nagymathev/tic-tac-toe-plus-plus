@@ -30,6 +30,8 @@ pub struct Board {
     players: [char; 2],
     players_hashed: HashMap<Uuid, char>,
     current_player: usize,
+    game_finished: bool,
+    winner: char,
     board: [[char; 3]; 3],
 }
 
@@ -39,6 +41,8 @@ impl Board {
             players: ['X', 'O'],
             players_hashed: HashMap::new(),
             current_player: 0,
+            game_finished: false,
+            winner: '_',
             board: [['_', '_', '_'], ['_', '_', '_'], ['_', '_', '_']],
         }
     }
@@ -71,7 +75,10 @@ impl Board {
 
             // TODO: Return something instead to notify the client.
             if let Some(winner) = self.check_for_winner() {
+                self.game_finished = true;
+                self.winner = winner;
                 println!("Winner is: {winner}!");
+                return true;
             }
             self.next_player();
             return true;
@@ -112,6 +119,24 @@ impl Board {
             && Self::eq_three(self.board[2][0], self.board[1][1], self.board[0][2])
         {
             winner = Some(self.board[2][0]);
+        }
+
+        // Check for tie
+        let mut has_free_slots = false;
+
+        // Are labels illegal?
+        'outer: for y in 0..self.board.len() {
+            for x in 0..self.board.len() {
+                if self.board[y][x] == '_' {
+                    has_free_slots = true;
+                    break 'outer;
+                }
+            }
+        }
+
+        // T for Tie
+        if !has_free_slots {
+            winner = Some('T')
         }
 
         winner
