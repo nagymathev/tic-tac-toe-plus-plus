@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 
-use axum::http::StatusCode;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -59,9 +58,13 @@ impl Board {
         self.current_player = (self.current_player + 1) % self.players.len();
     }
 
-    pub fn turn(&mut self, id: Uuid, pos: &Pos) {
+    /// Returns wether it was a valid turn or not.
+    pub fn turn(&mut self, id: Uuid, pos: &Pos) -> bool {
         if self.players_hashed[&id] == self.players[self.current_player] {
-            // TODO: Add checking for already occupied cell.
+            if self.board[pos.y][pos.x] != '_' {
+                return false;
+            }
+
             self.board[pos.y][pos.x] = self.players[self.current_player];
 
             // TODO: Return something instead to notify the client.
@@ -69,9 +72,10 @@ impl Board {
                 println!("Winner is: {winner}!");
             }
             self.next_player();
-            return;
+            return true;
         }
         println!("Someone turned without permissions: {id}");
+        return false;
     }
 
     pub fn check_for_winner(&self) -> Option<char> {

@@ -74,8 +74,10 @@ async fn health_check(Json(data): Json<Value>) -> StatusCode {
 #[debug_handler]
 async fn turn(state: Extension<Arc<Mutex<State>>>, Json(data): Json<TurnData>) -> StatusCode {
     let mut state = state.lock().await;
-    state.board.turn(data.id, &data.pos);
-    StatusCode::OK
+    match state.board.turn(data.id, &data.pos) {
+        true => StatusCode::OK,
+        false => StatusCode::FORBIDDEN,
+    }
 }
 
 async fn get_board(state: Extension<Arc<Mutex<State>>>) -> response::Json<Value> {
