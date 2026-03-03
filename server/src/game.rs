@@ -60,7 +60,9 @@ impl Board {
 
     /// Returns wether it was a valid turn or not.
     pub fn turn(&mut self, id: Uuid, pos: &Pos) -> bool {
-        if self.players_hashed[&id] == self.players[self.current_player] {
+        if self.players_hashed.contains_key(&id)
+            && self.players_hashed[&id] == self.players[self.current_player]
+        {
             if self.board[pos.y][pos.x] != '_' {
                 return false;
             }
