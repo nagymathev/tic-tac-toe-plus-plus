@@ -9,9 +9,6 @@
 [ext_resource type="Texture2D" uid="uid://e46oa8gxgvcq" path="res://assets/indicator.png" id="6_qfnet"]
 [ext_resource type="PackedScene" uid="uid://dur2jwjhbnjdg" path="res://scenes/menu.tscn" id="8_4mrxx"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_4mrxx"]
-bg_color = Color(0.7921569, 0.81960785, 0.8745098, 1)
-
 [node name="World" type="Control" unique_id=2066262059]
 layout_mode = 3
 anchors_preset = 15
@@ -55,10 +52,6 @@ theme_type_variation = &"BackgroundPanelContainer"
 
 [node name="InfoPanelContainer" type="PanelContainer" parent="Game/InfoPanelContainerShadow" unique_id=1149251509]
 layout_mode = 2
-
-[node name="Panel" type="Panel" parent="Game/InfoPanelContainerShadow/InfoPanelContainer" unique_id=1753637171]
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_4mrxx")
 
 [node name="InfoPanel" type="VBoxContainer" parent="Game/InfoPanelContainerShadow/InfoPanelContainer" unique_id=1309300820]
 layout_mode = 2
