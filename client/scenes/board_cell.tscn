@@ -8,7 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://6at5m7hsc0jw" path="res://assets/cell/board_cell_hover.png" id="5_ehih1"]
 [ext_resource type="Texture2D" uid="uid://b3o6ppi1vhxe8" path="res://assets/cell/play_x.png" id="6_iy72k"]
 
-[node name="Cell" type="AspectRatioContainer" unique_id=873196890]
+[node name="Cell" type="PanelContainer" unique_id=49726387]
+offset_right = 24.0
+offset_bottom = 24.0
 script = ExtResource("1_0vake")
 playerO_texture = ExtResource("2_fd5yo")
 playerX_texture = ExtResource("6_iy72k")

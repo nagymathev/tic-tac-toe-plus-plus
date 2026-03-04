@@ -6,6 +6,9 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7r4gi"]
 shader = ExtResource("1_y0upk")
 shader_parameter/tile_factor = Vector2(8, 8)
+shader_parameter/offset_scale = Vector2(0.1, 0.01)
+shader_parameter/time_scale = Vector2(0.1, 0.2)
+shader_parameter/amplitude = Vector2(2, 0.5)
 
 [node name="Background" type="TextureRect" unique_id=2140569013]
 material = SubResource("ShaderMaterial_7r4gi")
