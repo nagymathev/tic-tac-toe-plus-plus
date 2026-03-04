@@ -1,32 +1,32 @@
 [gd_scene format=3 uid="uid://dur2jwjhbnjdg"]
 
 [ext_resource type="Theme" uid="uid://y02j10pwahu5" path="res://resources/theme/global_theme.tres" id="1_yqeox"]
+[ext_resource type="Texture2D" uid="uid://b5heogx6kpaix" path="res://assets/cell/cell_clean_normal.png" id="2_vjb58"]
 
-[node name="Menu" type="CenterContainer" unique_id=987708985]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = -182.0
-offset_bottom = -57.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_con2f"]
+texture = ExtResource("2_vjb58")
+texture_margin_top = 1.0
+
+[node name="PanelContainer" type="PanelContainer" unique_id=1038130759]
+offset_right = 62.0
+offset_bottom = 108.0
 theme = ExtResource("1_yqeox")
+theme_type_variation = &"BackgroundPanelContainer"
 
 [node name="BorderPanel" type="PanelContainer" parent="." unique_id=1329240753]
 layout_mode = 2
+theme = ExtResource("1_yqeox")
 
-[node name="BackgroundPanel" type="PanelContainer" parent="BorderPanel" unique_id=1824804043]
+[node name="Panel" type="Panel" parent="BorderPanel" unique_id=834036245]
 layout_mode = 2
-theme_type_variation = &"BackgroundPanelContainer"
+theme_override_styles/panel = SubResource("StyleBoxTexture_con2f")
 
-[node name="MarginContainer" type="MarginContainer" parent="BorderPanel" unique_id=269075125]
+[node name="MarginContainer" type="MarginContainer" parent="BorderPanel" unique_id=272262432]
 layout_mode = 2
-theme_override_constants/margin_left = 4
-theme_override_constants/margin_top = 4
-theme_override_constants/margin_right = 4
-theme_override_constants/margin_bottom = 4
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="BorderPanel/MarginContainer" unique_id=178611779]
 layout_mode = 2
@@ -42,11 +42,6 @@ text = "TicTacToe++"
 layout_mode = 2
 text = "Play Online"
 
-[node name="Label" type="Label" parent="BorderPanel/MarginContainer/VBoxContainer/PlayOnlineButton" unique_id=805044608]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 8.0
-
 [node name="PlayOfflineButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=896988891]
 layout_mode = 2
 text = "Offline Mode"
@@ -55,6 +50,6 @@ text = "Offline Mode"
 layout_mode = 2
 text = "Settings"
 
-[node name="QuiButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=1701492686]
+[node name="QuitButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=1701492686]
 layout_mode = 2
 text = "Quit"
