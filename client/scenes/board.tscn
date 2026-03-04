@@ -24,4 +24,5 @@ columns = 3
 
 [node name="BoardManager" type="Node" parent="." unique_id=870770461]
 script = ExtResource("5_dxjtj")
+board_data = ExtResource("3_dxjtj")
 metadata/_custom_type_script = "uid://ywn6yajgscrr"

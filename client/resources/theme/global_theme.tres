@@ -1,26 +1,28 @@
 [gd_resource type="Theme" format=3 uid="uid://y02j10pwahu5"]
 
-[ext_resource type="StyleBox" uid="uid://cin8vlsr82cup" path="res://resources/theme/simple_style_box_flat.tres" id="1_cmhjg"]
+[ext_resource type="StyleBox" uid="uid://cin8vlsr82cup" path="res://resources/theme/background_shadow.tres" id="1_wve21"]
 [ext_resource type="FontFile" uid="uid://n2pcyoffyi2c" path="res://resources/theme/Plumbum.ttf" id="2_7c7sj"]
 [ext_resource type="StyleBox" uid="uid://cld7qwnitpv1" path="res://resources/theme/button/button_hover.tres" id="2_l3eee"]
 [ext_resource type="StyleBox" uid="uid://e7wjqlec0hpf" path="res://resources/theme/border_style_box.tres" id="2_lr3hx"]
 [ext_resource type="StyleBox" uid="uid://pnef2f1yg2o5" path="res://resources/theme/button/button_normal.tres" id="2_qybjm"]
 [ext_resource type="StyleBox" uid="uid://bx1v3fs2gbpyq" path="res://resources/theme/button/button_pressed.tres" id="4_l3eee"]
-[ext_resource type="StyleBox" uid="uid://byyyutmsv73l7" path="res://resources/theme/panel_default.tres" id="6_4qey4"]
+[ext_resource type="StyleBox" uid="uid://doaqirc5se428" path="res://resources/theme/panel_inside.tres" id="6_m3dbg"]
+[ext_resource type="StyleBox" uid="uid://byyyutmsv73l7" path="res://resources/theme/panel_container_default.tres" id="7_1lhhf"]
 
 [resource]
 default_base_scale = 1.0
 default_font = ExtResource("2_7c7sj")
 default_font_size = 8
 BackgroundPanelContainer/base_type = &"PanelContainer"
-BackgroundPanelContainer/styles/panel = ExtResource("1_cmhjg")
+BackgroundPanelContainer/styles/panel = ExtResource("1_wve21")
 BorderPanelContainer/base_type = &"PanelContainer"
 BorderPanelContainer/styles/panel = ExtResource("2_lr3hx")
 Button/colors/font_color = Color(0.30692318, 0.3069225, 0.30692264, 1)
 Button/styles/hover = ExtResource("2_l3eee")
 Button/styles/normal = ExtResource("2_qybjm")
 Button/styles/pressed = ExtResource("4_l3eee")
-PanelContainer/styles/panel = ExtResource("6_4qey4")
+Panel/styles/panel = ExtResource("6_m3dbg")
+PanelContainer/styles/panel = ExtResource("7_1lhhf")
 TitleLabel/base_type = &"Label"
 TitleLabel/colors/font_color = Color(0.28942707, 0.12319752, 0.32946265, 1)
 TitleLabel/colors/font_shadow_color = Color(0, 0, 0, 0.09411765)

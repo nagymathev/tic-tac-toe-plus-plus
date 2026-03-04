@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bx10x6hwhq4j0" path="res://scripts/board_cell.gd" id="1_0vake"]
 [ext_resource type="Texture2D" uid="uid://b5heogx6kpaix" path="res://assets/cell/cell_clean_normal.png" id="1_wvn1a"]
+[ext_resource type="Texture2D" uid="uid://dxk0owhecj3oq" path="res://assets/cell/play_o.png" id="2_fd5yo"]
 [ext_resource type="Texture2D" uid="uid://bu0atxfuw46dq" path="res://assets/cell/board_cell_pressed.png" id="4_pnt0r"]
 [ext_resource type="Texture2D" uid="uid://6at5m7hsc0jw" path="res://assets/cell/board_cell_hover.png" id="5_ehih1"]
 [ext_resource type="Texture2D" uid="uid://b3o6ppi1vhxe8" path="res://assets/cell/play_x.png" id="6_iy72k"]
@@ -14,6 +15,8 @@ texture_normal = ExtResource("1_wvn1a")
 texture_pressed = ExtResource("4_pnt0r")
 texture_hover = ExtResource("5_ehih1")
 script = ExtResource("1_0vake")
+playerO_texture = ExtResource("2_fd5yo")
+playerX_texture = ExtResource("6_iy72k")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1380639007]
 visible = false

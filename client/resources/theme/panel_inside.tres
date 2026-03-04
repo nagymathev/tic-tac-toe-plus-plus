@@ -1,0 +1,7 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://doaqirc5se428"]
+
+[ext_resource type="Texture2D" uid="uid://b5heogx6kpaix" path="res://assets/cell/cell_clean_normal.png" id="1_ksta1"]
+
+[resource]
+texture = ExtResource("1_ksta1")
+texture_margin_top = 1.0

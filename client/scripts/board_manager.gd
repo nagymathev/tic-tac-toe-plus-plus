@@ -12,7 +12,7 @@ var _host := "http://localhost:3000"
 var id: String = ""
 var player_type := BoardData.PlayerStates.Spectator
 
-signal game_finished(winner: String)
+@export var board_data: BoardData
 
 func take_turn(pos: Vector2i) -> void:
 	var json := {
@@ -41,7 +41,7 @@ func health_check() -> Dictionary:
 	var json := await _request_json_from("/board")
 	var board = (json["board"])
 	if board["game_finished"]:
-		game_finished.emit(board["winner"])
+		board_data.game_finished.emit(board["winner"])
 
 	return board
 
