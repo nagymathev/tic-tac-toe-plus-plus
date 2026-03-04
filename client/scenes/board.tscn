@@ -1,19 +1,15 @@
 [gd_scene format=3 uid="uid://bnud2xpf6meyc"]
 
+[ext_resource type="Theme" uid="uid://y02j10pwahu5" path="res://resources/theme/global_theme.tres" id="1_c3r7o"]
 [ext_resource type="Script" uid="uid://pdcmelomujlj" path="res://scripts/board.gd" id="1_fv4ni"]
 [ext_resource type="Resource" uid="uid://bmgv1s8gq56nr" path="res://resources/board_settings_default.tres" id="2_dxjtj"]
 [ext_resource type="Resource" uid="uid://qjrc4gcen1lf" path="res://resources/board_data.tres" id="3_dxjtj"]
-[ext_resource type="StyleBox" uid="uid://e7wjqlec0hpf" path="res://resources/theme/border_style_box.tres" id="4_dun80"]
 [ext_resource type="Script" uid="uid://ywn6yajgscrr" path="res://scripts/board_manager.gd" id="5_dxjtj"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dxjtj"]
-draw_center = false
-anti_aliasing = false
 
 [node name="Board" type="PanelContainer" unique_id=511984334 node_paths=PackedStringArray("_board_manager")]
 offset_right = 72.0
 offset_bottom = 72.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_dxjtj")
+theme = ExtResource("1_c3r7o")
 script = ExtResource("1_fv4ni")
 _board_stats = ExtResource("2_dxjtj")
 _board_manager = NodePath("BoardManager")
@@ -21,9 +17,9 @@ _board_data = ExtResource("3_dxjtj")
 
 [node name="BoardPanelContainer" type="PanelContainer" parent="." unique_id=1777449179]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("4_dun80")
+theme_type_variation = &"BackgroundPanelContainer"
 
-[node name="CellRender" type="GridContainer" parent="BoardPanelContainer" unique_id=125465585]
+[node name="CellRender" type="GridContainer" parent="." unique_id=125465585]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/h_separation = 0

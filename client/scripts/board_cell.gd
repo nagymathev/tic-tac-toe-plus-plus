@@ -6,8 +6,8 @@ class_name BoardCell extends Control
 @export var playerX_texture: Texture
 @export var _board_settings: BoardSettings
 
-@onready var button = $BackgroundButton
-@onready var player_texture_rect = $BackgroundButton/TextureRect
+@onready var button = self
+@onready var player_texture_rect = $TextureRect
 
 var board_pos: Vector2i
 var current_state := BoardData.PlayerStates.Spectator
@@ -41,7 +41,7 @@ func _on_button_pressed():
 func _on_hover():
 	z_index = 10
 	var tween := create_tween()
-	tween.tween_property(button, "scale", Vector2(1.2, 1.2), 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(button, "scale", Vector2(1.1, 1.1), 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
 func _off_hover():
 	z_index = 0

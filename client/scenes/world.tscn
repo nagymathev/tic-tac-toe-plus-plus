@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://bos73gp8ebmm2"]
 
+[ext_resource type="Theme" uid="uid://y02j10pwahu5" path="res://resources/theme/global_theme.tres" id="1_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://cejkb7fx2cc6a" path="res://scenes/background.tscn" id="1_i7141"]
 [ext_resource type="PackedScene" uid="uid://bnud2xpf6meyc" path="res://scenes/board.tscn" id="1_nnsk1"]
-[ext_resource type="StyleBox" uid="uid://e7wjqlec0hpf" path="res://resources/theme/border_style_box.tres" id="2_4wyf3"]
 [ext_resource type="Script" uid="uid://c7uc80x26l858" path="res://scripts/info_panel.gd" id="3_71j4m"]
 [ext_resource type="PackedScene" uid="uid://t1154idky767" path="res://scenes/board_cell.tscn" id="3_k0juu"]
 [ext_resource type="Resource" uid="uid://qjrc4gcen1lf" path="res://resources/board_data.tres" id="4_71j4m"]
 [ext_resource type="Texture2D" uid="uid://e46oa8gxgvcq" path="res://assets/indicator.png" id="6_qfnet"]
+[ext_resource type="PackedScene" uid="uid://dur2jwjhbnjdg" path="res://scenes/menu.tscn" id="8_4mrxx"]
 
 [node name="World" type="Control" unique_id=2066262059]
 layout_mode = 3
@@ -17,11 +18,13 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+theme = ExtResource("1_4mrxx")
 
 [node name="Background" parent="." unique_id=2140569013 instance=ExtResource("1_i7141")]
 layout_mode = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=978259093]
+[node name="Game" type="HBoxContainer" parent="." unique_id=978259093]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -34,31 +37,38 @@ offset_right = 62.0
 offset_bottom = 37.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(8, 8)
 pivot_offset_ratio = Vector2(0.5, 0.5)
 theme_override_constants/separation = 24
 
-[node name="Board" parent="HBoxContainer" unique_id=214929490 instance=ExtResource("1_nnsk1")]
+[node name="Board" parent="Game" unique_id=214929490 instance=ExtResource("1_nnsk1")]
 layout_mode = 2
 
-[node name="InfoPanelContainer" type="PanelContainer" parent="HBoxContainer" unique_id=1149251509]
+[node name="InfoPanelContainer" type="PanelContainer" parent="Game" unique_id=1149251509]
 layout_mode = 2
-theme_override_styles/panel = ExtResource("2_4wyf3")
 
-[node name="InfoPanel" type="VBoxContainer" parent="HBoxContainer/InfoPanelContainer" unique_id=1309300820]
+[node name="PanelContainer" type="PanelContainer" parent="Game/InfoPanelContainer" unique_id=996424777]
+layout_mode = 2
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="InfoPanel" type="VBoxContainer" parent="Game/InfoPanelContainer" unique_id=1309300820]
 layout_mode = 2
 theme_override_constants/separation = 0
 script = ExtResource("3_71j4m")
 _board_data = ExtResource("4_71j4m")
 
-[node name="MyPlayer" parent="HBoxContainer/InfoPanelContainer/InfoPanel" unique_id=873196890 instance=ExtResource("3_k0juu")]
+[node name="MyPlayer" parent="Game/InfoPanelContainer/InfoPanel" unique_id=873196890 instance=ExtResource("3_k0juu")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="TextureRect" type="TextureRect" parent="HBoxContainer/InfoPanelContainer/InfoPanel" unique_id=470901348]
+[node name="TextureRect" type="TextureRect" parent="Game/InfoPanelContainer/InfoPanel" unique_id=470901348]
 layout_mode = 2
 texture = ExtResource("6_qfnet")
 
-[node name="CurrentPlayer" parent="HBoxContainer/InfoPanelContainer/InfoPanel" unique_id=1319416414 instance=ExtResource("3_k0juu")]
+[node name="CurrentPlayer" parent="Game/InfoPanelContainer/InfoPanel" unique_id=1319416414 instance=ExtResource("3_k0juu")]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="Menu" parent="." unique_id=987708985 instance=ExtResource("8_4mrxx")]
+layout_mode = 1
+offset_right = 0.0
+offset_bottom = 0.0

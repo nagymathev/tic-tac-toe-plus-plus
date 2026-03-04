@@ -2,15 +2,26 @@
 
 [ext_resource type="StyleBox" uid="uid://cin8vlsr82cup" path="res://resources/theme/simple_style_box_flat.tres" id="1_cmhjg"]
 [ext_resource type="FontFile" uid="uid://n2pcyoffyi2c" path="res://resources/theme/Plumbum.ttf" id="2_7c7sj"]
+[ext_resource type="StyleBox" uid="uid://cld7qwnitpv1" path="res://resources/theme/button/button_hover.tres" id="2_l3eee"]
+[ext_resource type="StyleBox" uid="uid://e7wjqlec0hpf" path="res://resources/theme/border_style_box.tres" id="2_lr3hx"]
+[ext_resource type="StyleBox" uid="uid://pnef2f1yg2o5" path="res://resources/theme/button/button_normal.tres" id="2_qybjm"]
+[ext_resource type="StyleBox" uid="uid://bx1v3fs2gbpyq" path="res://resources/theme/button/button_pressed.tres" id="4_l3eee"]
 
 [resource]
 default_base_scale = 1.0
 default_font = ExtResource("2_7c7sj")
-default_font_size = 32
-Button/colors/font_color = Color(0.30588236, 0.37254903, 0.40784314, 1)
-Button/styles/normal = ExtResource("1_cmhjg")
-Label/colors/font_color = Color(0.30588236, 0.37254903, 0.40784314, 1)
-Label/colors/font_shadow_color = Color(0.1875, 0.22291666, 0.25, 0.2509804)
-Label/constants/shadow_offset_x = 1
-Label/constants/shadow_offset_y = 1
-PanelContainer/styles/panel = ExtResource("1_cmhjg")
+default_font_size = 8
+BackgroundPanelContainer/base_type = &"PanelContainer"
+BackgroundPanelContainer/styles/panel = ExtResource("1_cmhjg")
+Button/colors/font_color = Color(0.30692318, 0.3069225, 0.30692264, 1)
+Button/styles/hover = ExtResource("2_l3eee")
+Button/styles/normal = ExtResource("2_qybjm")
+Button/styles/pressed = ExtResource("4_l3eee")
+PanelContainer/styles/panel = ExtResource("2_lr3hx")
+TitleLabel/base_type = &"Label"
+TitleLabel/colors/font_color = Color(0.28942707, 0.12319752, 0.32946265, 1)
+TitleLabel/colors/font_shadow_color = Color(0, 0, 0, 0.09411765)
+TitleLabel/constants/shadow_offset_x = 1
+TitleLabel/constants/shadow_offset_y = 1
+TitleLabel/constants/shadow_outline_size = 0
+TitleLabel/font_sizes/font_size = 12
