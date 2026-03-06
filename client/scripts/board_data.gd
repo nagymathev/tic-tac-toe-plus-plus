@@ -1,6 +1,7 @@
 class_name BoardData extends Resource
 
 signal game_finished(winner: String)
+signal game_restart
 
 enum PlayerStates {
 	PlayerX,

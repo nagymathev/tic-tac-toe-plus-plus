@@ -58,7 +58,8 @@ layout_mode = 2
 texture = ExtResource("3_ulv47")
 stretch_mode = 5
 
-[node name="Button" type="Button" parent="Background/MainPanel/MarginContainer/VBoxContainer" unique_id=2006416139]
+[node name="PlayAgainButton" type="Button" parent="Background/MainPanel/MarginContainer/VBoxContainer" unique_id=2006416139]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4

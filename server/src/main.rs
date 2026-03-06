@@ -67,6 +67,14 @@ async fn register(state: Extension<Arc<Mutex<State>>>) -> Json<Value> {
     ))
 }
 
+async fn restart(state: Extension<Arc<Mutex<State>>>) -> StatusCode {
+    // TODO: Perhaps this is a shit way to it.
+    let mut state = state.lock().await;
+    *state = State::new();
+
+    StatusCode::OK
+}
+
 async fn health_check(Json(data): Json<Value>) -> StatusCode {
     StatusCode::OK
 }

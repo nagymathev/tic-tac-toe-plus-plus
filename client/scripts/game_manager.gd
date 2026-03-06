@@ -7,6 +7,10 @@ class_name GameManager extends Node
 
 func _ready() -> void:
 	board_data.game_finished.connect(_on_game_finished)
+	%GameFinishedScreen.play_again.connect(_on_play_again)
+
+func _on_play_again():
+	board_data.game_restart.emit()
 
 func _on_game_finished(winner: String):
 	var winning_screen = %GameFinishedScreen
