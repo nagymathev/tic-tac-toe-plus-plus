@@ -2,17 +2,7 @@
 
 [ext_resource type="Theme" uid="uid://y02j10pwahu5" path="res://resources/theme/global_theme.tres" id="1_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://cejkb7fx2cc6a" path="res://scenes/background.tscn" id="1_i7141"]
-[ext_resource type="PackedScene" uid="uid://bnud2xpf6meyc" path="res://scenes/board.tscn" id="1_nnsk1"]
 [ext_resource type="Script" uid="uid://55iqepgtj4qh" path="res://scripts/game_manager.gd" id="2_w7kh3"]
-[ext_resource type="Script" uid="uid://c7uc80x26l858" path="res://scripts/info_panel.gd" id="3_71j4m"]
-[ext_resource type="PackedScene" uid="uid://t1154idky767" path="res://scenes/board_cell.tscn" id="3_k0juu"]
-[ext_resource type="Resource" uid="uid://qjrc4gcen1lf" path="res://resources/board_data.tres" id="4_71j4m"]
-[ext_resource type="Texture2D" uid="uid://y282ea40cd6" path="res://assets/tie.png" id="6_jhx03"]
-[ext_resource type="Texture2D" uid="uid://e46oa8gxgvcq" path="res://assets/indicator.png" id="6_qfnet"]
-[ext_resource type="PackedScene" uid="uid://dur2jwjhbnjdg" path="res://scenes/menu.tscn" id="8_4mrxx"]
-[ext_resource type="Texture2D" uid="uid://dxk0owhecj3oq" path="res://assets/cell/play_o.png" id="8_q5onr"]
-[ext_resource type="PackedScene" uid="uid://crwrvycmupxlc" path="res://scenes/game_finished_screen.tscn" id="9_7r4gi"]
-[ext_resource type="Texture2D" uid="uid://b3o6ppi1vhxe8" path="res://assets/cell/play_x.png" id="9_jhx03"]
 
 [node name="World" type="Control" unique_id=2066262059]
 layout_mode = 3
@@ -24,76 +14,7 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme = ExtResource("1_4mrxx")
-
-[node name="GameManager" type="Node" parent="." unique_id=1543153485]
 script = ExtResource("2_w7kh3")
-board_data = ExtResource("4_71j4m")
-player_x_tex = ExtResource("9_jhx03")
-player_o_tex = ExtResource("8_q5onr")
-tie_tex = ExtResource("6_jhx03")
 
 [node name="Background" parent="." unique_id=2140569013 instance=ExtResource("1_i7141")]
-layout_mode = 1
-
-[node name="Game" type="HBoxContainer" parent="." unique_id=978259093]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -62.0
-offset_top = -37.0
-offset_right = 62.0
-offset_bottom = 37.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset_ratio = Vector2(0.5, 0.5)
-theme_override_constants/separation = 24
-
-[node name="BoardContainerShadow" type="PanelContainer" parent="Game" unique_id=1141478433]
-layout_mode = 2
-theme_type_variation = &"BackgroundPanelContainer"
-
-[node name="Board" parent="Game/BoardContainerShadow" unique_id=214929490 instance=ExtResource("1_nnsk1")]
-layout_mode = 2
-
-[node name="InfoPanelContainerShadow" type="PanelContainer" parent="Game" unique_id=135755224]
-layout_mode = 2
-theme_type_variation = &"BackgroundPanelContainer"
-
-[node name="InfoPanelContainer" type="PanelContainer" parent="Game/InfoPanelContainerShadow" unique_id=1149251509]
-layout_mode = 2
-
-[node name="InfoPanel" type="VBoxContainer" parent="Game/InfoPanelContainerShadow/InfoPanelContainer" unique_id=1309300820]
-layout_mode = 2
-theme_override_constants/separation = 2
-script = ExtResource("3_71j4m")
-_board_data = ExtResource("4_71j4m")
-
-[node name="MyPlayer" parent="Game/InfoPanelContainerShadow/InfoPanelContainer/InfoPanel" unique_id=873196890 instance=ExtResource("3_k0juu")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Indicator" type="TextureRect" parent="Game/InfoPanelContainerShadow/InfoPanelContainer/InfoPanel" unique_id=470901348]
-layout_mode = 2
-texture = ExtResource("6_qfnet")
-
-[node name="CurrentPlayer" parent="Game/InfoPanelContainerShadow/InfoPanelContainer/InfoPanel" unique_id=1319416414 instance=ExtResource("3_k0juu")]
-unique_name_in_owner = true
-layout_mode = 2
-
-[node name="Menu" parent="." unique_id=987708985 instance=ExtResource("8_4mrxx")]
-visible = false
-layout_mode = 0
-offset_left = 91.0
-offset_top = 15.5
-offset_right = 149.0
-offset_bottom = 119.5
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="GameFinishedScreen" parent="." unique_id=1814274808 instance=ExtResource("9_7r4gi")]
-unique_name_in_owner = true
-visible = false
 layout_mode = 1

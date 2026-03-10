@@ -5,20 +5,28 @@ class_name GameManager extends Node
 @export var player_o_tex: Texture2D
 @export var tie_tex: Texture2D
 
+@onready var menu_scene := preload("res://scenes/menu.tscn")
+var menu: Menu
+@onready var game_scene := preload("res://scenes/game.tscn")
+var game: Game
+
 func _ready() -> void:
-	board_data.game_finished.connect(_on_game_finished)
-	%GameFinishedScreen.play_again.connect(_on_play_again)
+	menu = menu_scene.instantiate()
+	menu.offline_play.connect(_offline_play)
+	menu.online_play.connect(_online_play)
+	add_child(menu)
 
-func _on_play_again():
-	board_data.game_restart.emit()
+## Starts local server with AI.
+func _offline_play() -> void:
+	remove_child(menu)
+	game = game_scene.instantiate()
+	add_child(game)
+	game.start_offline_game()
 
-func _on_game_finished(winner: String):
-	var winning_screen = %GameFinishedScreen
-	winning_screen.visible = true
-	match winner:
-		"X":
-			winning_screen.set_winning_player_texture(player_x_tex)
-		"O":
-			winning_screen.set_winning_player_texture(player_o_tex)
-		_:
-			winning_screen.set_winning_player_texture(tie_tex)
+## Connect to game server
+func _online_play() -> void:
+	# TODO: Prompt the user whether host or connect.
+	remove_child(menu)
+	game = game_scene.instantiate()
+	add_child(game)
+	game.start_online_game()

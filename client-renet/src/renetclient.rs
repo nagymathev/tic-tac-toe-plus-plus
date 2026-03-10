@@ -7,6 +7,8 @@ use godot::prelude::*;
 use renet::{ConnectionConfig, DefaultChannel, RenetClient};
 use renet_netcode::{ClientAuthentication, NETCODE_USER_DATA_BYTES, NetcodeClientTransport};
 
+use crate::player::Player;
+
 pub const PROTOCOL_ID: u64 = 7661;
 
 fn to_netcode_user_data(username: &str) -> [u8; NETCODE_USER_DATA_BYTES] {
@@ -34,7 +36,7 @@ struct ClientRenet {
 impl ClientRenet {
     /// Called when someone wants to place a tile.
     #[signal]
-    fn place_tile(at: i64);
+    fn placed_tile(player_id: store::PlayerId, at: i64);
 
     /// Called when first created and joined the server, returns self id.
     #[signal]
@@ -87,6 +89,18 @@ impl ClientRenet {
 
         s
     }
+
+    #[func]
+    fn place_tile(&mut self, at: i64) {
+        let event = store::GameEvent::PlaceTile {
+            player_id: self.client_id,
+            at: at as usize,
+        };
+        self.client.send_message(
+            DefaultChannel::ReliableOrdered,
+            serde_json::to_string(&event).unwrap(),
+        );
+    }
 }
 
 #[godot_api]
@@ -118,7 +132,7 @@ impl INode for ClientRenet {
                         self.signals().game_begin().emit(goes_first);
                     }
                     store::GameEvent::GameEnd { reason } => match reason {
-                        store::GameEndReason::PlayerLeft { player_id } => {
+                        store::GameEndReason::PlayerLeft { player_id: _ } => {
                             self.signals().game_end_player_left().emit();
                         }
                         store::GameEndReason::PlayerWon { winner } => {
@@ -126,7 +140,7 @@ impl INode for ClientRenet {
                         }
                     },
                     store::GameEvent::PlaceTile { player_id, at } => {
-                        self.signals().place_tile().emit((at as i64));
+                        self.signals().placed_tile().emit(player_id, at as i64);
                     }
                 }
             }

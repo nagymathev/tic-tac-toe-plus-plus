@@ -1,17 +1,28 @@
 [gd_scene format=3 uid="uid://dur2jwjhbnjdg"]
 
 [ext_resource type="Theme" uid="uid://y02j10pwahu5" path="res://resources/theme/global_theme.tres" id="1_yqeox"]
+[ext_resource type="Script" uid="uid://cry1776ib1aa" path="res://scripts/menu.gd" id="2_con2f"]
 [ext_resource type="Texture2D" uid="uid://b5heogx6kpaix" path="res://assets/cell/cell_clean_normal.png" id="2_vjb58"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_con2f"]
 texture = ExtResource("2_vjb58")
 texture_margin_top = 1.0
 
-[node name="PanelContainer" type="PanelContainer" unique_id=1038130759]
-offset_right = 62.0
-offset_bottom = 108.0
+[node name="Menu" type="PanelContainer" unique_id=1038130759]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -31.0
+offset_top = -54.0
+offset_right = 31.0
+offset_bottom = 54.0
+grow_horizontal = 2
+grow_vertical = 2
 theme = ExtResource("1_yqeox")
 theme_type_variation = &"BackgroundPanelContainer"
+script = ExtResource("2_con2f")
 
 [node name="BorderPanel" type="PanelContainer" parent="." unique_id=1329240753]
 layout_mode = 2
@@ -39,17 +50,21 @@ theme_type_variation = &"TitleLabel"
 text = "TicTacToe++"
 
 [node name="PlayOnlineButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=1542787912]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Play Online"
 
 [node name="PlayOfflineButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=896988891]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Offline Mode"
 
 [node name="SettingsButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=966933465]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Settings"
 
 [node name="QuitButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=1701492686]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"

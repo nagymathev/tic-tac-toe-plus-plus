@@ -4,12 +4,12 @@ class_name BoardCell extends Control
 
 @export var playerO_texture: Texture
 @export var playerX_texture: Texture
-@export var _board_settings: BoardSettings
 
 @onready var button = self
 @onready var player_texture_rect = $TextureRect
 
-var board_pos: Vector2i
+## Between 0 and 9(non inclusive)
+var board_pos: int
 var current_state := BoardData.PlayerStates.Spectator
 
 signal clicked(pos: Vector2i)

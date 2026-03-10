@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://ycrrkg03gmof"]
+
+[ext_resource type="PackedScene" uid="uid://bnud2xpf6meyc" path="res://scenes/board/board.tscn" id="1_iywne"]
+[ext_resource type="Theme" uid="uid://y02j10pwahu5" path="res://resources/theme/global_theme.tres" id="1_p57ef"]
+[ext_resource type="Script" uid="uid://c7uc80x26l858" path="res://scripts/info_panel.gd" id="2_p57ef"]
+[ext_resource type="Script" uid="uid://4xswv24jwxg6" path="res://scripts/game.gd" id="2_u5sy4"]
+[ext_resource type="Resource" uid="uid://qjrc4gcen1lf" path="res://resources/board_data.tres" id="3_u5sy4"]
+[ext_resource type="PackedScene" uid="uid://t1154idky767" path="res://scenes/board/board_cell.tscn" id="4_gee14"]
+[ext_resource type="Texture2D" uid="uid://e46oa8gxgvcq" path="res://assets/indicator.png" id="5_0tnpc"]
+
+[node name="Game" type="HBoxContainer" unique_id=1795668985]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -62.0
+offset_top = -37.0
+offset_right = 62.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset_ratio = Vector2(0.5, 0.5)
+theme = ExtResource("1_p57ef")
+theme_override_constants/separation = 24
+script = ExtResource("2_u5sy4")
+
+[node name="BoardContainerShadow" type="PanelContainer" parent="." unique_id=1294356117]
+layout_mode = 2
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="Board" parent="BoardContainerShadow" unique_id=511984334 instance=ExtResource("1_iywne")]
+layout_mode = 2
+
+[node name="InfoPanelContainerShadow" type="PanelContainer" parent="." unique_id=1559914147]
+layout_mode = 2
+size_flags_vertical = 4
+theme_type_variation = &"BackgroundPanelContainer"
+
+[node name="InfoPanelContainer" type="PanelContainer" parent="InfoPanelContainerShadow" unique_id=725155673]
+layout_mode = 2
+
+[node name="InfoPanel" type="VBoxContainer" parent="InfoPanelContainerShadow/InfoPanelContainer" unique_id=244376387]
+layout_mode = 2
+theme_override_constants/separation = 2
+script = ExtResource("2_p57ef")
+_board_data = ExtResource("3_u5sy4")
+
+[node name="MyPlayer" parent="InfoPanelContainerShadow/InfoPanelContainer/InfoPanel" unique_id=1971803156 instance=ExtResource("4_gee14")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Indicator" type="TextureRect" parent="InfoPanelContainerShadow/InfoPanelContainer/InfoPanel" unique_id=191125918]
+layout_mode = 2
+texture = ExtResource("5_0tnpc")
+
+[node name="CurrentPlayer" parent="InfoPanelContainerShadow/InfoPanelContainer/InfoPanel" unique_id=796530118 instance=ExtResource("4_gee14")]
+unique_name_in_owner = true
+layout_mode = 2
