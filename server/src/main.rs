@@ -1,96 +1,158 @@
-mod game;
-
-use std::sync::Arc;
-
-use axum::{
-    Extension, Json, Router, extract,
-    http::StatusCode,
-    response,
-    routing::{get, post},
+use std::{
+    net::{SocketAddr, UdpSocket},
+    thread,
+    time::{Duration, Instant, SystemTime},
 };
 
-use axum_macros::debug_handler;
-use serde::{Deserialize, Serialize};
-use serde_json::{Value, json};
-use tokio::sync::Mutex;
-use uuid::Uuid;
+use log::{info, trace, warn};
+use renet::{ConnectionConfig, DefaultChannel, RenetServer, ServerEvent};
+use renet_netcode::{NETCODE_USER_DATA_BYTES, NetcodeServerTransport, ServerConfig};
 
-#[derive(Deserialize)]
-struct TurnData {
-    id: Uuid,
-    pos: game::Pos,
+use store::{GameEndReason, GameEvent, GameState};
+
+pub const PROTOCOL_ID: u64 = 7661;
+
+/// Utility function for extracting a players name from renet user data
+fn name_from_user_data(user_data: &[u8; NETCODE_USER_DATA_BYTES]) -> String {
+    let mut buffer = [0u8; 8];
+    buffer.copy_from_slice(&user_data[0..8]);
+    let mut len = u64::from_le_bytes(buffer) as usize;
+    len = len.min(NETCODE_USER_DATA_BYTES - 8);
+    let data = user_data[8..len + 8].to_vec();
+    String::from_utf8(data).unwrap()
 }
 
-struct State {
-    board: game::Board,
-}
+fn main() {
+    env_logger::init();
 
-impl State {
-    fn new() -> Self {
-        State {
-            board: game::Board::new(),
+    let server_addr: SocketAddr = "0.0.0.0:8991".parse().unwrap();
+
+    let connection_config = ConnectionConfig::default();
+    let mut server = RenetServer::new(connection_config);
+
+    let current_time = SystemTime::now()
+        .duration_since(SystemTime::UNIX_EPOCH)
+        .unwrap();
+    let server_config = ServerConfig {
+        current_time,
+        max_clients: 2,
+        protocol_id: PROTOCOL_ID,
+        public_addresses: vec![server_addr],
+        authentication: renet_netcode::ServerAuthentication::Unsecure,
+    };
+    let socket = UdpSocket::bind(server_addr).unwrap();
+    let mut transport = NetcodeServerTransport::new(server_config, socket).unwrap();
+
+    trace!("Server listening on {}", server_addr);
+
+    let mut game_state = GameState::default();
+    let mut last_updated = Instant::now();
+    loop {
+        let now = Instant::now();
+        let duration = now - last_updated;
+        last_updated = now;
+
+        server.update(duration);
+        transport.update(duration, &mut server).unwrap();
+
+        while let Some(event) = server.get_event() {
+            match event {
+                ServerEvent::ClientConnected { client_id } => {
+                    for (player_id, player) in game_state.players.iter() {
+                        let event = GameEvent::PlayerJoined {
+                            player_id: *player_id,
+                            name: player.name.clone(),
+                        };
+                        server.send_message(
+                            client_id,
+                            DefaultChannel::ReliableOrdered,
+                            serde_json::to_string(&event).unwrap(),
+                        );
+                    }
+
+                    let user_data = transport.user_data(client_id).unwrap();
+                    let username = name_from_user_data(&user_data);
+                    let event = GameEvent::PlayerJoined {
+                        player_id: client_id,
+                        name: username,
+                    };
+                    game_state.dispatch(&event);
+
+                    server.broadcast_message(
+                        DefaultChannel::ReliableOrdered,
+                        serde_json::to_string(&event).unwrap(),
+                    );
+                    info!("Client {} connected!", client_id);
+
+                    if game_state.players.len() == 2 {
+                        let event = GameEvent::GameBegin {
+                            goes_first: client_id,
+                        };
+                        game_state.dispatch(&event);
+                        server.broadcast_message(
+                            DefaultChannel::ReliableOrdered,
+                            serde_json::to_string(&event).unwrap(),
+                        );
+                        trace!("The game has begun!");
+                    }
+                }
+                ServerEvent::ClientDisconnected { client_id, reason } => {
+                    let event = GameEvent::PlayerDisconnected {
+                        player_id: client_id,
+                    };
+                    game_state.dispatch(&event);
+                    server.broadcast_message(
+                        DefaultChannel::ReliableOrdered,
+                        serde_json::to_string(&event).unwrap(),
+                    );
+                    info!("Client {} disconnected.", client_id);
+
+                    let event = GameEvent::GameEnd {
+                        reason: GameEndReason::PlayerLeft {
+                            player_id: client_id,
+                        },
+                    };
+                    game_state.dispatch(&event);
+                    server.broadcast_message(
+                        DefaultChannel::ReliableOrdered,
+                        serde_json::to_string(&event).unwrap(),
+                    );
+                }
+            }
         }
-    }
-}
 
-#[tokio::main]
-async fn main() {
-    let state = Arc::new(Mutex::new(State::new()));
+        for client_id in server.clients_id() {
+            while let Some(message) =
+                server.receive_message(client_id, DefaultChannel::ReliableOrdered)
+            {
+                let message = String::from_utf8(message.into()).unwrap();
+                let event: GameEvent = serde_json::from_str(&message).unwrap();
+                match game_state.dispatch(&event) {
+                    Ok(_) => {
+                        trace!("Player {} sent: \n\t{:#?}", client_id, event);
+                        server.broadcast_message(
+                            DefaultChannel::ReliableOrdered,
+                            serde_json::to_string(&event).unwrap(),
+                        );
 
-    let app = Router::new()
-        .route("/", get(|| async { "Hello world!" }))
-        .route("/register", get(register))
-        .route("/turn", post(turn))
-        .route("/board", get(get_board))
-        .layer(Extension(state));
-
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
-    axum::serve(listener, app).await.unwrap();
-}
-
-async fn register(state: Extension<Arc<Mutex<State>>>) -> Json<Value> {
-    let id = Uuid::new_v4();
-
-    let mut state = state.lock().await;
-    let player_type = state.board.add_player(id);
-    println!(
-        "[{}] new registered user: {}, with PlayerType: {:#?}",
-        chrono::Local::now(),
-        &id,
-        player_type
-    );
-    Json(json!(
-        {
-            "id": id,
-            "player_type": player_type,
+                        if let Some(winner) = game_state.determine_winner() {
+                            let event = GameEvent::GameEnd {
+                                reason: GameEndReason::PlayerWon { winner },
+                            };
+                            server.broadcast_message(
+                                DefaultChannel::ReliableOrdered,
+                                serde_json::to_string(&event).unwrap(),
+                            );
+                        }
+                    }
+                    Err(_) => {
+                        warn!("Player {} sent invalid event: \n\t{:#?}", client_id, event);
+                    }
+                }
+            }
         }
-    ))
-}
 
-async fn restart(state: Extension<Arc<Mutex<State>>>) -> StatusCode {
-    // TODO: Perhaps this is a shit way to it.
-    let mut state = state.lock().await;
-    *state = State::new();
-
-    StatusCode::OK
-}
-
-async fn health_check(Json(data): Json<Value>) -> StatusCode {
-    StatusCode::OK
-}
-
-#[debug_handler]
-async fn turn(state: Extension<Arc<Mutex<State>>>, Json(data): Json<TurnData>) -> StatusCode {
-    let mut state = state.lock().await;
-    match state.board.turn(data.id, &data.pos) {
-        true => StatusCode::OK,
-        false => StatusCode::FORBIDDEN,
+        transport.send_packets(&mut server);
+        thread::sleep(Duration::from_millis(50));
     }
-}
-
-async fn get_board(state: Extension<Arc<Mutex<State>>>) -> response::Json<Value> {
-    let board = &state.lock().await.board;
-    response::Json(json!({
-        "board": board
-    }))
 }
