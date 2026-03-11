@@ -48,6 +48,6 @@ func _on_cell_pressed(at: int):
 	print("[Board] Cell %d pressed" % at)
 	self.placed_tile.emit(at)
 
-func place_tile(at: int):
+func place_tile(at: int, tile: GameState.Tile):
 	var cell := cells[at]
-	cell.set_cell_state(BoardData.PlayerStates.PlayerX)
+	cell.set_cell_state(tile)

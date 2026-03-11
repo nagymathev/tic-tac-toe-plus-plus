@@ -31,8 +31,10 @@ func dispatch(event: GameEvent) -> void:
 		GameEvent.GameEventType.PlayerJoined:
 			var player_id: int = event.value["player-id"]
 			var name: String = event.value["name"]
+			var piece: Tile = Tile.Tac if players.size() > 0 else Tile.Tic
+			players[player_id] = Player.new()
 			players[player_id].name = name
-			players[player_id].piece = Tile.Tac if players.size() > 0 else Tile.Tic
+			players[player_id].piece = piece
 		GameEvent.GameEventType.PlayerDisconnected:
 			var player_id: int = event.value["player-id"]
 			players.erase(player_id)
@@ -55,5 +57,6 @@ func dispatch(event: GameEvent) -> void:
 			for k in players.keys():
 				if k != player_id:
 					active_player_id = k
+			print("Board State: " + str(board))
 	
 	history.push_back(event)

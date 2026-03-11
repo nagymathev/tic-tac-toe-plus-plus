@@ -3,19 +3,13 @@ class_name BoardData extends Resource
 signal game_finished(winner: String)
 signal game_restart
 
-enum PlayerStates {
-	PlayerX,
-	PlayerO,
-	Spectator
-}
-
-var my_player: PlayerStates:
+var my_player: GameState.Tile:
 	get:
 		return my_player
 	set(value):
 		my_player = value
 		emit_changed()
-var current_player: PlayerStates:
+var current_player: GameState.Tile:
 	get:
 		return current_player
 	set(value):

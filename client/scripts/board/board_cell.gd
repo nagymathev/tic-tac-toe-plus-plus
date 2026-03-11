@@ -10,16 +10,16 @@ class_name BoardCell extends Control
 
 ## Between 0 and 9(non inclusive)
 var board_pos: int
-var current_state := BoardData.PlayerStates.Spectator
+var current_state := GameState.Tile.Empty
 
 signal clicked(pos: Vector2i)
 
-func set_cell_state(state: BoardData.PlayerStates):
+func set_cell_state(state: GameState.Tile):
 	match state:
-		BoardData.PlayerStates.PlayerX:
+		GameState.Tile.Tic:
 			player_texture_rect.visible = true
 			player_texture_rect.texture = playerX_texture
-		BoardData.PlayerStates.PlayerO:
+		GameState.Tile.Tac:
 			player_texture_rect.visible = true
 			player_texture_rect.texture = playerO_texture
 		_:
@@ -33,7 +33,7 @@ func _ready() -> void:
 	button.mouse_exited.connect(_off_hover)
 	button.pivot_offset_ratio = Vector2(0.5, 0.5)
 
-	set_cell_state(BoardData.PlayerStates.Spectator)
+	set_cell_state(GameState.Tile.Empty)
 
 func _on_button_pressed():
 	clicked.emit(board_pos)

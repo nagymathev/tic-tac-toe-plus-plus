@@ -91,9 +91,9 @@ impl ClientRenet {
     }
 
     #[func]
-    fn place_tile(&mut self, at: i64) {
+    fn place_tile(&mut self, client_id: store::PlayerId, at: i64) {
         let event = store::GameEvent::PlaceTile {
-            player_id: self.client_id,
+            player_id: client_id,
             at: at as usize,
         };
         self.client.send_message(
@@ -119,7 +119,8 @@ impl INode for ClientRenet {
         if self.client.is_connected() {
             while let Some(text) = self.client.receive_message(DefaultChannel::ReliableOrdered) {
                 let text = String::from_utf8(text.into()).unwrap();
-                godot::global::print(&[text.to_variant()]);
+                // godot::global::print(&[text.to_variant()]);
+                godot_print!("RENETCLIENT{}: {}", self.client_id, text);
                 let event: store::GameEvent = serde_json::from_str(&text).unwrap();
                 match event {
                     store::GameEvent::PlayerJoined { player_id, name } => {
