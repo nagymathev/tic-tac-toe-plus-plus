@@ -8,6 +8,7 @@ var server: ClientRenet
 var client_id: int
 var game_state: GameState
 @onready var board: Board = $BoardContainerShadow/Board
+var local_server_process: Dictionary
 
 func _ready() -> void:
 	game_state = GameState.new()
@@ -24,11 +25,15 @@ func start_offline_game():
 		#add_child(server)
 		call_deferred("add_child", server)
 
+func _exit_tree() -> void:
+	if local_server_process["pid"]:
+		OS.kill(local_server_process["pid"])
+
 func _start_local_server():
 	# TODO: have a more flexible server location
 	# Exported or not
 	if OS.has_feature("editor"):
-		OS.execute("../target/debug/server", [])
+		local_server_process = OS.execute_with_pipe("../target/debug/server", [], false)
 	else:
 		# TODO: server should be bundled with the exported project.
 		pass

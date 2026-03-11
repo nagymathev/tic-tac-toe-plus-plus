@@ -3,68 +3,92 @@
 [ext_resource type="Theme" uid="uid://y02j10pwahu5" path="res://resources/theme/global_theme.tres" id="1_yqeox"]
 [ext_resource type="Script" uid="uid://cry1776ib1aa" path="res://scripts/menu.gd" id="2_con2f"]
 [ext_resource type="Texture2D" uid="uid://b5heogx6kpaix" path="res://assets/cell/cell_clean_normal.png" id="2_vjb58"]
+[ext_resource type="Texture2D" uid="uid://nfmcnbyf7uh5" path="res://assets/title.png" id="4_mhnvy"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_con2f"]
 texture = ExtResource("2_vjb58")
 texture_margin_top = 1.0
 
-[node name="Menu" type="PanelContainer" unique_id=1038130759]
+[node name="Menu" type="Control" unique_id=1862628629]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_con2f")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1227112878]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -31.0
-offset_top = -54.0
-offset_right = 31.0
-offset_bottom = 54.0
+offset_left = -108.5
+offset_top = -60.0
+offset_right = 108.5
+offset_bottom = 60.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="Title" type="TextureRect" parent="VBoxContainer" unique_id=12165114]
+layout_mode = 2
+texture = ExtResource("4_mhnvy")
+stretch_mode = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer" unique_id=2099537746]
+layout_mode = 2
+theme_override_constants/margin_left = 72
+theme_override_constants/margin_right = 72
+
+[node name="Shadow" type="PanelContainer" parent="VBoxContainer/MarginContainer" unique_id=1038130759]
+layout_mode = 2
 theme = ExtResource("1_yqeox")
 theme_type_variation = &"BackgroundPanelContainer"
-script = ExtResource("2_con2f")
 
-[node name="BorderPanel" type="PanelContainer" parent="." unique_id=1329240753]
+[node name="BorderPanel" type="PanelContainer" parent="VBoxContainer/MarginContainer/Shadow" unique_id=1329240753]
 layout_mode = 2
 theme = ExtResource("1_yqeox")
 
-[node name="Panel" type="Panel" parent="BorderPanel" unique_id=834036245]
+[node name="Panel" type="Panel" parent="VBoxContainer/MarginContainer/Shadow/BorderPanel" unique_id=834036245]
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_con2f")
 
-[node name="MarginContainer" type="MarginContainer" parent="BorderPanel" unique_id=272262432]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/MarginContainer/Shadow/BorderPanel" unique_id=272262432]
 layout_mode = 2
 theme_override_constants/margin_left = 2
 theme_override_constants/margin_top = 2
 theme_override_constants/margin_right = 2
 theme_override_constants/margin_bottom = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="BorderPanel/MarginContainer" unique_id=178611779]
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/MarginContainer/Shadow/BorderPanel/MarginContainer" unique_id=178611779]
 layout_mode = 2
 size_flags_vertical = 4
 
-[node name="Label" type="Label" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=1542318776]
+[node name="Label" type="Label" parent="VBoxContainer/MarginContainer/Shadow/BorderPanel/MarginContainer/VBoxContainer" unique_id=1542318776]
+visible = false
 layout_mode = 2
 size_flags_horizontal = 4
 theme_type_variation = &"TitleLabel"
 text = "TicTacToe++"
 
-[node name="PlayOnlineButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=1542787912]
+[node name="PlayOnlineButton" type="Button" parent="VBoxContainer/MarginContainer/Shadow/BorderPanel/MarginContainer/VBoxContainer" unique_id=1542787912]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Play Online"
 
-[node name="PlayOfflineButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=896988891]
+[node name="PlayOfflineButton" type="Button" parent="VBoxContainer/MarginContainer/Shadow/BorderPanel/MarginContainer/VBoxContainer" unique_id=896988891]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Offline Mode"
 
-[node name="SettingsButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=966933465]
+[node name="SettingsButton" type="Button" parent="VBoxContainer/MarginContainer/Shadow/BorderPanel/MarginContainer/VBoxContainer" unique_id=966933465]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Settings"
 
-[node name="QuitButton" type="Button" parent="BorderPanel/MarginContainer/VBoxContainer" unique_id=1701492686]
+[node name="QuitButton" type="Button" parent="VBoxContainer/MarginContainer/Shadow/BorderPanel/MarginContainer/VBoxContainer" unique_id=1701492686]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"
