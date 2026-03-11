@@ -35,8 +35,12 @@ func _start_local_server():
 		# TODO: server should be bundled with the exported project.
 		pass
 
-func start_online_game():
-	server = ClientRenet.create_connection("OnlineChad" + str(rand_from_seed(Time.get_ticks_usec())[0]), "127.0.0.1:8991")
+func start_online_game(settings: OnlineSettings):
+	if settings.host:
+		_start_local_server()
+		server = ClientRenet.create_connection(settings.username, "127.0.0.1:8991")
+	else:
+		server = ClientRenet.create_connection(settings.username, settings.server_address)
 	_connect_server_signals(server)
 	add_child(server)
 

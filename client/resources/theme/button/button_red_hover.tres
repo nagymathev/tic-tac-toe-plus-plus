@@ -1,13 +1,13 @@
-[gd_resource type="StyleBoxTexture" format=3 uid="uid://cld7qwnitpv1"]
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://cfeeaumlydqkc"]
 
-[ext_resource type="Texture2D" uid="uid://bpt1u8oswegok" path="res://assets/button/button-hover.png" id="1_7thxu"]
+[ext_resource type="Texture2D" uid="uid://dhfk8sqxumg7c" path="res://assets/button/button-red-hover.png" id="1_t1nct"]
 
 [resource]
 content_margin_left = 4.0
 content_margin_top = 4.0
 content_margin_right = 4.0
 content_margin_bottom = 4.0
-texture = ExtResource("1_7thxu")
+texture = ExtResource("1_t1nct")
 texture_margin_left = 2.0
 texture_margin_top = 2.0
 texture_margin_right = 2.0

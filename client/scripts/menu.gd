@@ -1,8 +1,11 @@
 class_name Menu extends Node
 
-signal online_play
+signal online_play(settings: OnlineSettings)
 signal offline_play
 signal settings
+
+@onready var online_settings_widget = preload("res://scenes/windows/online_play_settings_widget.tscn")
+var menu_stack: Array[Control] = []
 
 func _ready() -> void:
 	%PlayOnlineButton.pressed.connect(_on_play_online)
@@ -11,7 +14,19 @@ func _ready() -> void:
 	%QuitButton.pressed.connect(_on_quit)
 
 func _on_play_online() -> void:
-	online_play.emit()
+	var settings_widget: OnlineSettingsMenu = online_settings_widget.instantiate()
+	settings_widget.cancelled.connect(_on_online_cancelled)
+	add_child(settings_widget)
+	menu_stack.push_back(settings_widget)
+	var settings: OnlineSettings = await settings_widget.proceed
+	var widget: Control = menu_stack.pop_back()
+	widget.queue_free()
+	print("Host: %s, Username: %s " % [settings.host, settings.username])
+	online_play.emit(settings)
+
+func _on_online_cancelled() -> void:
+	var widget: Control = menu_stack.pop_back()
+	widget.queue_free()
 
 func _on_play_offline() -> void:
 	offline_play.emit()

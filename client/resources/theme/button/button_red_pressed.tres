@@ -1,0 +1,14 @@
+[gd_resource type="StyleBoxTexture" format=3 uid="uid://b8fnl1mvausa4"]
+
+[ext_resource type="Texture2D" uid="uid://btlhcvfqghskf" path="res://assets/button/button-red-pressed.png" id="1_dsp0c"]
+
+[resource]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+texture = ExtResource("1_dsp0c")
+texture_margin_left = 2.0
+texture_margin_top = 2.0
+texture_margin_right = 2.0
+texture_margin_bottom = 3.0

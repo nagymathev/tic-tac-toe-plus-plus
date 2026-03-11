@@ -5,9 +5,26 @@
 [ext_resource type="StyleBox" uid="uid://cld7qwnitpv1" path="res://resources/theme/button/button_hover.tres" id="2_l3eee"]
 [ext_resource type="StyleBox" uid="uid://e7wjqlec0hpf" path="res://resources/theme/border_style_box.tres" id="2_lr3hx"]
 [ext_resource type="StyleBox" uid="uid://pnef2f1yg2o5" path="res://resources/theme/button/button_normal.tres" id="2_qybjm"]
+[ext_resource type="StyleBox" uid="uid://bkp75kexsa5cg" path="res://resources/theme/button/button_disabled.tres" id="3_m3dbg"]
 [ext_resource type="StyleBox" uid="uid://bx1v3fs2gbpyq" path="res://resources/theme/button/button_pressed.tres" id="4_l3eee"]
 [ext_resource type="StyleBox" uid="uid://doaqirc5se428" path="res://resources/theme/panel_inside.tres" id="6_m3dbg"]
 [ext_resource type="StyleBox" uid="uid://byyyutmsv73l7" path="res://resources/theme/panel_container_default.tres" id="7_1lhhf"]
+[ext_resource type="StyleBox" uid="uid://bh7bavjugc738" path="res://resources/theme/button/button_green_hover.tres" id="7_ccmyh"]
+[ext_resource type="StyleBox" uid="uid://krx811lpkt5n" path="res://resources/theme/button/button_green_normal.tres" id="7_py6g1"]
+[ext_resource type="Texture2D" uid="uid://4sn6karyscoj" path="res://assets/button/toggle-on.png" id="7_w4dhg"]
+[ext_resource type="Texture2D" uid="uid://bsu5jxcjbajds" path="res://assets/button/toggle-on-disabled.png" id="8_py6g1"]
+[ext_resource type="StyleBox" uid="uid://dpgx0ti0cic40" path="res://resources/theme/button/button_green_pressed.tres" id="9_ccmyh"]
+[ext_resource type="Texture2D" uid="uid://ckox61d2mrtb" path="res://assets/button/toggle-off.png" id="9_rftla"]
+[ext_resource type="StyleBox" uid="uid://dy00qgxljvtba" path="res://resources/theme/button/button_red_normal.tres" id="10_6ynej"]
+[ext_resource type="StyleBox" uid="uid://cfeeaumlydqkc" path="res://resources/theme/button/button_red_hover.tres" id="10_a8ri8"]
+[ext_resource type="Texture2D" uid="uid://c16r4m0uqn12u" path="res://assets/button/toggle-off-disabled.png" id="10_ccmyh"]
+[ext_resource type="StyleBox" uid="uid://b8fnl1mvausa4" path="res://resources/theme/button/button_red_pressed.tres" id="12_agfgn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_m3dbg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w4dhg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_py6g1"]
 
 [resource]
 default_base_scale = 1.0
@@ -18,11 +35,34 @@ BackgroundPanelContainer/styles/panel = ExtResource("1_wve21")
 BorderPanelContainer/base_type = &"PanelContainer"
 BorderPanelContainer/styles/panel = ExtResource("2_lr3hx")
 Button/colors/font_color = Color(0.30692318, 0.3069225, 0.30692264, 1)
+Button/styles/disabled = ExtResource("3_m3dbg")
+Button/styles/focus = SubResource("StyleBoxEmpty_m3dbg")
 Button/styles/hover = ExtResource("2_l3eee")
+Button/styles/hover_pressed = ExtResource("2_l3eee")
 Button/styles/normal = ExtResource("2_qybjm")
 Button/styles/pressed = ExtResource("4_l3eee")
+ButtonGreen/base_type = &"Button"
+ButtonGreen/colors/font_color = Color(0.8666667, 0.88235295, 0.93333334, 1)
+ButtonGreen/styles/hover = ExtResource("7_ccmyh")
+ButtonGreen/styles/normal = ExtResource("7_py6g1")
+ButtonGreen/styles/pressed = ExtResource("9_ccmyh")
+ButtonRed/base_type = &"Button"
+ButtonRed/colors/font_color = Color(0.8666667, 0.88235295, 0.93333334, 1)
+ButtonRed/styles/hover = ExtResource("10_a8ri8")
+ButtonRed/styles/normal = ExtResource("10_6ynej")
+ButtonRed/styles/pressed = ExtResource("12_agfgn")
+CheckButton/icons/checked = ExtResource("7_w4dhg")
+CheckButton/icons/checked_disabled = ExtResource("8_py6g1")
+CheckButton/icons/unchecked = ExtResource("9_rftla")
+CheckButton/icons/unchecked_disabled = ExtResource("10_ccmyh")
+CheckButton/styles/hover = ExtResource("2_l3eee")
+CheckButton/styles/hover_pressed = ExtResource("4_l3eee")
+CheckButton/styles/normal = ExtResource("2_qybjm")
+CheckButton/styles/pressed = ExtResource("4_l3eee")
 GridContainer/constants/h_separation = 2
 GridContainer/constants/v_separation = 2
+LineEdit/styles/focus = SubResource("StyleBoxEmpty_w4dhg")
+LineEdit/styles/normal = SubResource("StyleBoxEmpty_py6g1")
 Panel/styles/panel = ExtResource("6_m3dbg")
 PanelContainer/styles/panel = ExtResource("7_1lhhf")
 TitleLabel/base_type = &"Label"
