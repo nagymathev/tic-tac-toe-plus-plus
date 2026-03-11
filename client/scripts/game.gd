@@ -15,15 +15,12 @@ func _ready() -> void:
 	board.placed_tile.connect(_on_client_placed_tile)
 
 func start_offline_game():
-	var thread := Thread.new()
-	thread.start(_start_local_server)
-	if thread.is_started():
-		server = ClientRenet.create_connection("OfflineUser1", "127.0.0.1:8991")
-		var dummy = ClientRenet.create_connection("OfflineUser2", "127.0.0.1:8991")
-		add_child(dummy)
-		_connect_server_signals(server)
-		#add_child(server)
-		call_deferred("add_child", server)
+	_start_local_server()
+	server = ClientRenet.create_connection("OfflineUser1", "127.0.0.1:8991")
+	_connect_server_signals(server)
+	var dummy = ClientRenet.create_connection("OfflineUser2", "127.0.0.1:8991")
+	add_child(dummy)
+	add_child(server)
 
 func _exit_tree() -> void:
 	if local_server_process["pid"]:
