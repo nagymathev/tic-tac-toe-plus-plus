@@ -33,7 +33,6 @@ func _unhandled_key_input(event: InputEvent) -> void:
 			_open_menu()
 
 func _open_menu() -> void:
-	print("menu open")
 	menu = menu_scene.instantiate()
 	menu.offline_play.connect(_offline_play)
 	menu.online_play.connect(_online_play)
@@ -41,6 +40,5 @@ func _open_menu() -> void:
 	menu_open = true
 
 func _close_menu() -> void:
-	print("menu closed")
 	menu.queue_free()
 	menu_open = false
