@@ -4,7 +4,7 @@ signal online_play(settings: OnlineSettings)
 signal offline_play
 signal settings
 
-@onready var online_settings_widget = preload("res://scenes/windows/online_play_settings_widget.tscn")
+@onready var online_settings_widget = preload("res://scenes/window/online_play_settings_widget.tscn")
 var menu_stack: Array[Control] = []
 
 func _ready() -> void:

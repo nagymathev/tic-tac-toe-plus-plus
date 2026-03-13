@@ -3,17 +3,17 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://n2pcyoffyi2c"
-path="res://.godot/imported/Plumbum.ttf-8b42bdd0f7481ce2553751c267119135.fontdata"
+path="res://.godot/imported/Plumbum.ttf-a9f08e6324dd8d8824b5a0e0ba4f5501.fontdata"
 
 [deps]
 
-source_file="res://resources/theme/Plumbum.ttf"
-dest_files=["res://.godot/imported/Plumbum.ttf-8b42bdd0f7481ce2553751c267119135.fontdata"]
+source_file="res://resources/theme/fonts/Plumbum.ttf"
+dest_files=["res://.godot/imported/Plumbum.ttf-a9f08e6324dd8d8824b5a0e0ba4f5501.fontdata"]
 
 [params]
 
 Rendering=null
-antialiasing=1
+antialiasing=0
 generate_mipmaps=false
 disable_embedded_bitmaps=true
 multichannel_signed_distance_field=false
@@ -23,14 +23,20 @@ allow_system_fallback=true
 force_autohinter=false
 modulate_color_glyphs=false
 hinting=1
-subpixel_positioning=4
-keep_rounding_remainders=true
+subpixel_positioning=3
+keep_rounding_remainders=false
 oversampling=0.0
 Fallbacks=null
 fallbacks=[]
 Compress=null
 compress=true
-preload=[]
+preload=[{
+"chars": [],
+"glyphs": [],
+"name": "New Configuration",
+"size": Vector2i(16, 0),
+&"variation_embolden": 0.0
+}]
 language_support={}
 script_support={}
 opentype_features={}
