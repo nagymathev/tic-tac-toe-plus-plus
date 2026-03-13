@@ -1,0 +1,7 @@
+services:
+  rvouspoint:
+    image: nagymathev/rvouspoint:latest
+    ports:
+      - "9099:3000"
+    environment:
+      - RUST_LOG=trace

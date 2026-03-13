@@ -1,4 +1,4 @@
-use std::sync::Arc;
+use std::{env::Args, sync::Arc};
 
 use axum::{
     Json, Router, extract,
@@ -7,11 +7,32 @@ use axum::{
 };
 use serde::{Deserialize, Serialize};
 use tokio::sync::{Mutex, RwLock};
+use tracing::{error, info, trace};
 
 #[tokio::main]
 async fn main() {
+    if std::option_env!("RUST_LOG").is_none() {
+        unsafe {
+            std::env::set_var("RUST_LOG", "trace");
+        }
+    }
     // initialize tracing
     tracing_subscriber::fmt::init();
+
+    let mut port = "3000".to_string();
+
+    for (i, val) in std::env::args().enumerate() {
+        if val.eq("-p") {
+            if let Some(p) = std::env::args().nth(i + 1) {
+                port = p;
+            } else {
+                panic!("Expected port number after -p!");
+            }
+        }
+    }
+
+    let address = "0.0.0.0:".to_string() + &port;
+    info!("Listening address: {address}");
 
     // build our application with a route
     let app = Router::new()
@@ -25,7 +46,8 @@ async fn main() {
         .with_state(IpDbState::default());
 
     // run our app with hyper, listening globally on port 3000
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    let listener = tokio::net::TcpListener::bind(&address).await.unwrap();
+    trace!("Server listening on {address}");
     axum::serve(listener, app).await.unwrap();
 }
 
