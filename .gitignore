@@ -4,3 +4,9 @@
 .idea
 .obsidian
 target
+
+# I'm unsure if this should be public...
+client/product_details.gd
+client/product_details.gd.uid
+.env
+godot.gdkey
