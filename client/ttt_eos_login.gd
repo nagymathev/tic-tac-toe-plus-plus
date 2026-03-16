@@ -12,6 +12,9 @@ var peer := EOSGMultiplayerPeer.new()
 var peer_user_id = 0
 var local_lobby: HLobby
 
+signal game_started
+signal hosting_server
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	
@@ -80,13 +83,13 @@ func _notification(what: int) -> void:
 			printerr("Failed to shutdown EOS: ", EOS.result_str(res))
 
 func _on_peer_connected(id: int) -> void:
-	print("Player %s connected!" % id)
+	print_rich("[color=orange]Player %s connected![/color]" % id)
 	lock_lobby()
 	peer_user_id = id
 	start_game()
 
 func _on_peer_disconnected(id: int) -> void:
-	print("Player %s disconnected!" % id)
+	print_rich("[color=orange]Player %s disconnected![/color]" % id)
 	exit_game()
 
 func find_match() -> void:
@@ -130,6 +133,7 @@ func create_lobby() -> void:
 	multiplayer.multiplayer_peer = peer
 	is_server = true
 	local_lobby = new_lobby
+	hosting_server.emit()
 
 func lock_lobby() -> void:
 	if is_server and local_lobby:
@@ -142,7 +146,8 @@ func lock_lobby() -> void:
 
 @rpc("any_peer", "call_local", "reliable")
 func start_game() -> void:
-	print("Game Started\n----------")
+	print_rich("[color=orange]Game Started\n----------[/color]")
+	game_started.emit()
 
 func exit_game() -> void:
 	if peer != null:

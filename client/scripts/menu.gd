@@ -1,6 +1,7 @@
-class_name Menu extends Node
+class_name Menu extends Control
 
 signal online_play(settings: OnlineSettings)
+signal hosting_server
 signal offline_play
 signal settings
 
@@ -26,6 +27,7 @@ func _on_play_online() -> void:
 	# Start searching for games
 	var eos = TTTEOS.new()
 	add_child(eos)
+	eos.hosting_server.connect(func(): hosting_server.emit())
 	
 	var search_window = preload("res://scenes/window/game_search_window.tscn")
 	search_window = search_window.instantiate()

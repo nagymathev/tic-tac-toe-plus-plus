@@ -2,7 +2,9 @@
 
 [ext_resource type="Theme" uid="uid://y02j10pwahu5" path="res://resources/theme/global_theme.tres" id="1_4mrxx"]
 [ext_resource type="PackedScene" uid="uid://cejkb7fx2cc6a" path="res://scenes/background.tscn" id="1_i7141"]
-[ext_resource type="Script" uid="uid://55iqepgtj4qh" path="res://scripts/game_manager.gd" id="2_w7kh3"]
+[ext_resource type="Script" uid="uid://55iqepgtj4qh" path="res://scripts/world_manager.gd" id="2_w7kh3"]
+[ext_resource type="PackedScene" uid="uid://ycrrkg03gmof" path="res://scenes/game.tscn" id="4_71j4m"]
+[ext_resource type="PackedScene" uid="uid://dur2jwjhbnjdg" path="res://scenes/menu.tscn" id="4_k0juu"]
 
 [node name="World" type="Control" unique_id=2066262059]
 layout_mode = 3
@@ -17,4 +19,11 @@ theme = ExtResource("1_4mrxx")
 script = ExtResource("2_w7kh3")
 
 [node name="Background" parent="." unique_id=2140569013 instance=ExtResource("1_i7141")]
+layout_mode = 1
+
+[node name="Game" parent="." unique_id=1795668985 instance=ExtResource("4_71j4m")]
+visible = false
+layout_mode = 1
+
+[node name="Menu" parent="." unique_id=1862628629 instance=ExtResource("4_k0juu")]
 layout_mode = 1
