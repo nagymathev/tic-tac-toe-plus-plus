@@ -8,6 +8,9 @@ class_name BoardCell extends TextureButton
 @onready var button: BoardCell = self
 @onready var player_texture_rect = $TextureRect
 
+@onready var hover_sound: AudioStreamOggVorbis = preload("res://assets/audio/Retro1.ogg")
+@onready var click_sound: AudioStreamOggVorbis = preload("res://assets/audio/Retro8.ogg")
+
 ## Between 0 and 9(non inclusive)
 var board_pos: int
 var current_state := GameState.Tile.Empty
@@ -36,19 +39,20 @@ func _ready() -> void:
 
 	set_cell_state(GameState.Tile.Empty)
 
-func _play_audio() -> void:
+func _play_audio(audio: AudioStream) -> void:
+	$AudioStreamPlayer.stream = audio
 	var pitch = floor(board_pos / 3) + board_pos % 3
 	$AudioStreamPlayer.pitch_scale = (randf() * 0.1) + 1 + (pitch * 0.1)
 	$AudioStreamPlayer.play()
 
 func _on_button_down() -> void:
-	_play_audio()
+	_play_audio(click_sound)
 
 func _on_button_pressed():
 	clicked.emit(board_pos)
 
 func _on_hover():
-	_play_audio()
+	_play_audio(hover_sound)
 	z_index = 10
 	var tween := create_tween()
 	tween.tween_property(button, "scale", Vector2(1.1, 1.1), 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)

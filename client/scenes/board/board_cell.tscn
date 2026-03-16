@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dxk0owhecj3oq" path="res://assets/cell/play_o.png" id="2_fd5yo"]
 [ext_resource type="Texture2D" uid="uid://6at5m7hsc0jw" path="res://assets/cell/board_cell_hover.png" id="5_ehih1"]
 [ext_resource type="Texture2D" uid="uid://b3o6ppi1vhxe8" path="res://assets/cell/play_x.png" id="6_iy72k"]
-[ext_resource type="AudioStream" uid="uid://hexaheq2omuk" path="res://assets/audio/select_007.ogg" id="7_e125b"]
+[ext_resource type="AudioStream" uid="uid://domgykypaxxxq" path="res://assets/audio/Retro1.ogg" id="7_e125b"]
 
 [node name="BackgroundButton" type="TextureButton" unique_id=1971803156]
 offset_right = 24.0
@@ -29,3 +29,4 @@ texture = ExtResource("6_iy72k")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1524074432]
 stream = ExtResource("7_e125b")
 volume_db = -12.0
+bus = &"SFX"
