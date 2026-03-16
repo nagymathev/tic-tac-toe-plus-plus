@@ -28,5 +28,4 @@ texture = ExtResource("6_iy72k")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1524074432]
 stream = ExtResource("7_e125b")
-volume_db = -5.0
-bus = &"SFX"
+volume_db = -12.0
