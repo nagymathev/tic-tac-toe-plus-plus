@@ -10,9 +10,20 @@ var game_state: GameState
 @onready var board: Board = $BoardContainerShadow/Board
 var local_server_process: Dictionary
 
+#@onready var peer: EOSGMultiplayerPeer = EOSGMultiplayerPeer.new()
+
 func _ready() -> void:
 	game_state = GameState.new()
 	board.placed_tile.connect(_on_client_placed_tile)
+	#peer.peer_connection_closed.connect(_on_peer_connection_closed)
+	#peer.peer_connected.connect(_on_peer_connected)
+	#peer.peer_disconnected.connect(_on_peer_disconnected)
+	#peer.incoming_connection_request.connect(_on_incoming_connection)
+
+func _process(delta: float) -> void:
+	#peer.poll()
+	#peer.accept_all_connection_requests()
+	pass
 
 func start_offline_game():
 	_start_local_server()
@@ -23,7 +34,7 @@ func start_offline_game():
 	add_child(server)
 
 func _exit_tree() -> void:
-	if local_server_process["pid"]:
+	if local_server_process.has("pid"):
 		OS.kill(local_server_process["pid"])
 
 func _start_local_server():
@@ -36,13 +47,31 @@ func _start_local_server():
 		pass
 
 func start_online_game(settings: OnlineSettings):
-	if settings.host:
-		_start_local_server()
-		server = ClientRenet.create_connection(settings.username, "127.0.0.1:8991")
-	else:
-		server = ClientRenet.create_connection(settings.username, settings.server_address)
-	_connect_server_signals(server)
-	add_child(server)
+	var eos = TTTEOS.new()
+	add_child(eos)
+	#var nat: EOS.P2P.NATType = await HP2P.get_nat_type_async()
+	#print(nat)
+	
+	#if settings.host:
+		#var result := peer.create_server("ttt")
+		#if result != OK:
+			#printerr("Failed to create servver")
+			#return
+		#multiplayer.multiplayer_peer = peer
+		##_start_local_server()
+		##server = ClientRenet.create_connection(settings.username, "127.0.0.1:8991")
+	#else:
+		#var result := peer.create_client("ttt", settings.username)
+		#if result != OK:
+			#printerr("FAiled to connect to server")
+			#return
+		#multiplayer.multiplayer_peer = peer
+		#server = ClientRenet.create_connection(settings.username, settings.server_address)
+	
+	#peer.accept_all_connection_requests()
+	#peer.set_auto_accept_connection_requests(true)
+	#_connect_server_signals(server)
+	#add_child(server)
 
 func _connect_server_signals(server: ClientRenet) -> void:
 	server.connected_to_game.connect(_on_connected)
@@ -99,3 +128,18 @@ func _on_game_begin(goes_first: int) -> void:
 
 func _on_client_placed_tile(at: int) -> void:
 	server.place_tile(client_id, at)
+
+func _on_peer_connection_closed(data: Dictionary) -> void:
+	pass
+
+func _on_peer_connected(id: int) -> void:
+	print("Peer connected with id: %s" % id )
+	pass
+
+func _on_peer_disconnected(id: int) -> void:
+	print("Peer disconnected with id: %s" % id)
+	pass
+
+func _on_incoming_connection(data: Dictionary) -> void:
+	print("Incoming connection request!")
+	print("Data: %s" % data)
