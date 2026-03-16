@@ -21,7 +21,18 @@ func _on_play_online() -> void:
 	var settings: OnlineSettings = await settings_widget.proceed
 	var widget: Control = menu_stack.pop_back()
 	widget.queue_free()
-	print("Host: %s, Username: %s " % [settings.host, settings.username])
+	print_rich("[color=green]Playing online with username: %s[/color]" % settings.username)
+	
+	# Start searching for games
+	var eos = TTTEOS.new()
+	add_child(eos)
+	
+	var search_window = preload("res://scenes/window/game_search_window.tscn")
+	search_window = search_window.instantiate()
+	add_child(search_window)
+	
+	await eos.game_started
+	search_window.queue_free()
 	online_play.emit(settings)
 
 func _on_online_cancelled() -> void:

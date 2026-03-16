@@ -22,10 +22,9 @@ func _on_host_toggle() -> void:
 		ip_panel.show()
 
 func _on_continue() -> void:
-	var is_hosting: bool = host_toggle.button_pressed
-	if username_input.text.is_empty() or !is_hosting and ip_input.text.is_empty():
+	if username_input.text.is_empty():
 		return
-	var settings: OnlineSettings = OnlineSettings.new(username_input.text, ip_input.text, is_hosting)
+	var settings: OnlineSettings = OnlineSettings.new(username_input.text)
 	proceed.emit(settings)
 
 func _on_cancel() -> void:
