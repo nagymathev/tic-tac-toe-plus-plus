@@ -8,7 +8,7 @@ class_name WorldManager extends Node
 func _ready() -> void:
 	menu.offline_play.connect(_offline_play)
 	menu.online_play.connect(_online_play)
-	menu.hosting_server.connect(func(): game.player_joined(1, "Host"))
+	#menu.hosting_server.connect(func(): game.player_joined(1, "Host"))
 
 ## Starts local server with AI.
 func _offline_play() -> void:

@@ -36,16 +36,11 @@ func _delete_board():
 func _ready() -> void:
 	_init_board()
 
-# func _draw() -> void:
-# 	if Engine.is_editor_hint():
-# 		draw_line(Vector2.ZERO, Vector2(_board_stats.size_x * _board_stats.cell_scale * _board_stats.cell_size, 0), Color.CORAL, 1)
-# 		draw_line(Vector2.ZERO, Vector2(0, _board_stats.size_y * _board_stats.cell_scale * _board_stats.cell_size), Color.CORAL, 1)
-# 		draw_line(Vector2(_board_stats.size_x * _board_stats.cell_scale * _board_stats.cell_size, 0), Vector2(_board_stats.size_x * _board_stats.cell_scale * _board_stats.cell_size, _board_stats.size_y * _board_stats.cell_scale * _board_stats.cell_size), Color.CORAL, 1)
-# 		draw_line(Vector2(0, _board_stats.size_y * _board_stats.cell_scale * _board_stats.cell_size), Vector2(_board_stats.size_x * _board_stats.cell_scale * _board_stats.cell_size, _board_stats.size_y * _board_stats.cell_scale * _board_stats.cell_size), Color.CORAL, 1)
-
 ## Notify server of action
 func _on_cell_pressed(at: int):
 	print("[Board] Cell %d pressed" % at)
+	
+	GameStateManager.send_place_tile_event.rpc(at)
 	self.placed_tile.emit(at)
 
 func place_tile(at: int, tile: GameState.Tile):

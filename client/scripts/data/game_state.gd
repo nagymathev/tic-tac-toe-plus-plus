@@ -1,4 +1,4 @@
-class_name GameState extends RefCounted
+class_name GameState extends Resource
 
 ## Game State object for TicTacToe++. Tries to be on par with the server-side rust implementation.
 
@@ -30,14 +30,18 @@ func _validate(event: GameEvent) -> bool:
 	match event.type:
 		GameEvent.GameEventType.PlayerJoined:
 			if players.has(event.value["player-id"]):
+				printerr("Connecting player already exists!")
 				return false
 		GameEvent.GameEventType.PlayerDisconnected:
 			if !players.has(event.value["player-id"]):
+				printerr("Disconnecting player doesn't exist!")
 				return false
 		GameEvent.GameEventType.GameBegin:
 			if !players.has(event.value["goes-first"]):
+				printerr("First player doesn't exist!")
 				return false
 			if stage != Stage.PreGame:
+				printerr("Wrong game stage! Not PreGame!")
 				return false
 		GameEvent.GameEventType.GameEnd:
 			stage = Stage.Ended
@@ -45,6 +49,7 @@ func _validate(event: GameEvent) -> bool:
 			match reason:
 				GameEvent.GameEndReason.PlayerWon:
 					if stage != Stage.InGame:
+						printerr("Wrong game stage! Not InGame!")
 						return false
 				GameEvent.GameEndReason.PlayerLeft:
 					pass
@@ -52,12 +57,16 @@ func _validate(event: GameEvent) -> bool:
 			var at: int = event.value["at"]
 			var player_id: int = event.value["player-id"]
 			if !players.has(player_id):
+				printerr("Player doesn't exist!")
 				return false
 			if active_player_id != player_id:
+				printerr("Not active player!")
 				return false
 			if at > 8:
+				printerr("Placement out of range!")
 				return false
 			if board[at] != Tile.Empty:
+				printerr("Can't place on already occupied Tile!")
 				return false
 	
 	return true

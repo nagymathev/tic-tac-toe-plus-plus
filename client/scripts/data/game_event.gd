@@ -1,4 +1,4 @@
-class_name GameEvent extends RefCounted
+class_name GameEvent extends Resource
 
 ## GameEvent describes events that can happen throughout the course of the game.[br]
 ##
