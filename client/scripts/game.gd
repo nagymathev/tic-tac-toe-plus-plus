@@ -7,7 +7,7 @@ class_name Game extends Control
 var server: ClientRenet
 var client_id: int
 var game_state: GameState
-@onready var board: Board = $BoardContainerShadow/Board
+@onready var board: Board = $Board
 var local_server_process: Dictionary
 
 func _ready() -> void:

@@ -25,35 +25,26 @@ theme = ExtResource("1_p57ef")
 theme_override_constants/separation = 24
 script = ExtResource("2_u5sy4")
 
-[node name="BoardContainerShadow" type="PanelContainer" parent="." unique_id=1294356117]
-layout_mode = 2
-theme_type_variation = &"BackgroundPanelContainer"
-
-[node name="Board" parent="BoardContainerShadow" unique_id=511984334 instance=ExtResource("1_iywne")]
+[node name="Board" parent="." unique_id=511984334 instance=ExtResource("1_iywne")]
 layout_mode = 2
 
-[node name="InfoPanelContainerShadow" type="PanelContainer" parent="." unique_id=1559914147]
-layout_mode = 2
-size_flags_vertical = 4
-theme_type_variation = &"BackgroundPanelContainer"
-
-[node name="InfoPanelContainer" type="PanelContainer" parent="InfoPanelContainerShadow" unique_id=725155673]
+[node name="InfoPanelContainer" type="PanelContainer" parent="." unique_id=725155673]
 layout_mode = 2
 
-[node name="InfoPanel" type="VBoxContainer" parent="InfoPanelContainerShadow/InfoPanelContainer" unique_id=244376387]
+[node name="InfoPanel" type="VBoxContainer" parent="InfoPanelContainer" unique_id=244376387]
 layout_mode = 2
 theme_override_constants/separation = 2
 script = ExtResource("2_p57ef")
 _board_data = ExtResource("3_u5sy4")
 
-[node name="MyPlayer" parent="InfoPanelContainerShadow/InfoPanelContainer/InfoPanel" unique_id=1971803156 instance=ExtResource("4_gee14")]
+[node name="MyPlayer" parent="InfoPanelContainer/InfoPanel" unique_id=1971803156 instance=ExtResource("4_gee14")]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Indicator" type="TextureRect" parent="InfoPanelContainerShadow/InfoPanelContainer/InfoPanel" unique_id=191125918]
+[node name="Indicator" type="TextureRect" parent="InfoPanelContainer/InfoPanel" unique_id=191125918]
 layout_mode = 2
 texture = ExtResource("5_0tnpc")
 
-[node name="CurrentPlayer" parent="InfoPanelContainerShadow/InfoPanelContainer/InfoPanel" unique_id=796530118 instance=ExtResource("4_gee14")]
+[node name="CurrentPlayer" parent="InfoPanelContainer/InfoPanel" unique_id=796530118 instance=ExtResource("4_gee14")]
 unique_name_in_owner = true
 layout_mode = 2
