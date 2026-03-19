@@ -27,3 +27,15 @@ layout_mode = 1
 
 [node name="Menu" parent="." unique_id=1862628629 instance=ExtResource("4_k0juu")]
 layout_mode = 1
+
+[node name="Label" type="Label" parent="." unique_id=2004939126]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = -8.0
+offset_right = 44.0
+offset_bottom = -4.0
+grow_vertical = 0
+text = "v0.1"
