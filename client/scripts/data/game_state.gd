@@ -127,7 +127,7 @@ func determine_winner() -> Tile:
 	
 	for arr in [row1, row2, row3, col1, col2, col3, diag1, diag2]:
 		var tiles: Array[Tile] = [board[arr[0]], board[arr[1]], board[arr[2]]]
-		if _eq_three(tiles[0], tiles[1], tiles[2]):
+		if tiles[0] != Tile.Empty && _eq_three(tiles[0], tiles[1], tiles[2]):
 			return tiles[0]
 	
 	return Tile.Empty

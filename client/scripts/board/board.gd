@@ -35,6 +35,11 @@ func _delete_board():
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_init_board()
+	GameStateManager.placed_tile.connect(_on_tile_placed)
+
+func _on_tile_placed(piece: GameState.Tile, at: int) -> void:
+	cells[at].set_cell_state(piece)
+	cells[at]._placed_animation()
 
 ## Notify server of action
 func _on_cell_pressed(at: int):

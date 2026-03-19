@@ -8,9 +8,10 @@ var client_id: int
 @onready var board: Board = $Board
 var local_server_process: Dictionary
 
-#func _ready() -> void:
-	#board.placed_tile.connect(_on_client_placed_tile)
-	#multiplayer.peer_connected.connect(_on_peer_connected)
+func _ready() -> void:
+	GameStateManager.game_begin.connect(_on_game_begin_set_local_player_indicator)
+	GameStateManager.game_begin.connect(_on_game_begin_set_active_player_indicator)
+	GameStateManager.game_won.connect(_on_game_finished)
 
 func start_offline_game():
 	print_rich("[color=green]Starting local game![/color]")
@@ -41,6 +42,15 @@ func _start_local_server():
 func start_online_game(settings: OnlineSettings):
 	pass
 
+func _on_game_finished(winner: int):
+	var finished_screen_scene := preload("res://scenes/game_finished_screen.tscn").instantiate()
+	add_child(finished_screen_scene)
+
+func _on_game_begin_set_local_player_indicator(goes_first: int) -> void:
+	%MyPlayer.set_cell_state(GameStateManager.game_state.players[multiplayer.get_unique_id()].piece)
+
+func _on_game_begin_set_active_player_indicator(goes_first: int) -> void:
+	%CurrentPlayer.set_cell_state(GameStateManager.game_state.players[GameStateManager.game_state.active_player_id].piece)
 
 #func _connect_server_signals(server: ClientRenet) -> void:
 	#server.connected_to_game.connect(_on_connected)

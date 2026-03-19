@@ -4,7 +4,7 @@ extends Node
 
 var game_state: GameState = GameState.new()
 
-signal placed_tile(instigator: int, at: int)
+signal placed_tile(piece: GameState.Tile, at: int)
 signal player_joined(id: int)
 signal player_left(id: int)
 signal game_won(winner: int)
@@ -19,8 +19,18 @@ func _place_tile_event(player_id: int, at: int):
 	var event := GameEvent.new()
 	event.type = GameEvent.GameEventType.PlaceTile
 	event.value = { "player-id": player_id, "at": at }
-	game_state.dispatch(event)
-	placed_tile.emit(player_id, at)
+	if !game_state.dispatch(event):
+		return
+	
+	placed_tile.emit(game_state.players[player_id].piece, at)
+	var winner_piece := game_state.determine_winner()
+	print_rich("[color=green]Is there a winner? %s" % GameState.Tile.keys()[winner_piece])
+	if winner_piece != GameState.Tile.Empty:
+		print_rich("[color=green]Game WON WOOOO")
+		for player in game_state.players:
+			if game_state.players[player].piece == winner_piece:
+				game_won.emit(player)
+	
 
 @rpc("any_peer", "call_local", "reliable")
 func send_place_tile_event(at: int) -> void:
@@ -32,7 +42,8 @@ func _player_connected_event(id: int, name: String) -> void:
 	var event := GameEvent.new()
 	event.type = GameEvent.GameEventType.PlayerJoined
 	event.value = { "player-id": id, "name": name }
-	game_state.dispatch(event)
+	if !game_state.dispatch(event):
+		return
 	
 	if game_state.players.size() == 2:
 		var start_event := GameEvent.new()

@@ -51,6 +51,11 @@ func _on_button_down() -> void:
 func _on_button_pressed():
 	clicked.emit(board_pos)
 
+func _placed_animation() -> void:
+	var tween := create_tween()
+	tween.tween_property(button, "scale", Vector2(1.1, 1.1), 0.4).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	tween.tween_property(button, "scale", Vector2(1.0, 1.0), 0.4).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+
 func _on_hover():
 	_play_audio(hover_sound)
 	z_index = 10
