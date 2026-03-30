@@ -90,7 +90,8 @@ theme_type_variation = &"BorderPanelContainer"
 layout_mode = 2
 theme_override_constants/separation = 2
 
-[node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Content/VBoxContainer" unique_id=1365878608]
+[node name="WinnerLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/Content/VBoxContainer" unique_id=1365878608]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Winner is:"

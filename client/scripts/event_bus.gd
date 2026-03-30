@@ -7,3 +7,5 @@ signal game_ended
 signal game_restart
 
 signal back_to_menu
+
+signal winner(name: String)

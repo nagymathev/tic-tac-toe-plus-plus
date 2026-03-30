@@ -5,6 +5,7 @@ func _ready() -> void:
 	%MainMenuButton.pressed.connect(_on_main_menu)
 	EventBus.game_ended.connect(_on_game_ended)
 	EventBus.game_started.connect(_game_started)
+	EventBus.winner.connect(_on_winner_selected)
 
 func _game_started() -> void:
 	if !multiplayer.is_server():
@@ -21,3 +22,6 @@ func _on_main_menu():
 func _on_game_ended() -> void:
 	var trans_anim := $TransitionAnimation as TransitionAnimation
 	trans_anim.play_entry_animation()
+
+func _on_winner_selected(name: String) -> void:
+	%WinnerLabel.text = "Winner is: %s" % name

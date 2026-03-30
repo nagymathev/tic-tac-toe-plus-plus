@@ -48,6 +48,7 @@ func _place_tile_event(player_id: int, at: int):
 		print_rich("[color=green]Game WON WOOOO")
 		for player in game_state.players:
 			if game_state.players[player].piece == winner_piece:
+				EventBus.winner.emit(GameState.Tile.keys()[winner_piece])
 				_game_end_event()
 	
 	if game_state.is_full():
