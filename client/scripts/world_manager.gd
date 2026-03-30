@@ -8,6 +8,7 @@ class_name WorldManager extends Node
 
 func _ready() -> void:
 	menu.offline_button.pressed.connect(_offline_play)
+	menu.online_button.pressed.connect(_online_play)
 	EventBus.back_to_menu.connect(_on_back_to_menu)
 
 ## Starts local server with AI.
@@ -18,11 +19,11 @@ func _offline_play() -> void:
 	game_mgr.start_local_game()
 
 ## Connect to game server
-func _online_play(settings: OnlineSettings) -> void:
+func _online_play() -> void:
+	await _transition()
 	menu.visible = false
 	game.visible = true
-	game.start_online_game(settings)
-	EventBus.game_started.emit()
+	game_mgr.start_online_game()
 
 func _on_back_to_menu() -> void:
 	await _transition()

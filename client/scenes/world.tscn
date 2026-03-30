@@ -14,6 +14,8 @@
 [ext_resource type="Shader" uid="uid://wyx2p2v5onlf" path="res://shaders/transition.gdshader" id="11_e3hyu"]
 [ext_resource type="Script" uid="uid://dselis672meol" path="res://scripts/game_state_manager.gd" id="13_jhx03"]
 [ext_resource type="Script" uid="uid://df7wpqkfha16" path="res://scripts/local_mode_api.gd" id="14_o8fc1"]
+[ext_resource type="Script" uid="uid://b63vtmipq47pg" path="res://scripts/online_mode_api.gd" id="15_xo05s"]
+[ext_resource type="Script" uid="uid://biutw3lxl0cpw" path="res://ttt_eos_login.gd" id="16_dss4m"]
 
 [sub_resource type="Animation" id="Animation_e3hyu"]
 length = 0.001
@@ -244,5 +246,12 @@ metadata/_custom_type_script = "uid://dselis672meol"
 
 [node name="LocalModeAPI" type="Node" parent="GameStateManager" unique_id=2090087945]
 script = ExtResource("14_o8fc1")
+
+[node name="OnlineModeAPI" type="Node" parent="GameStateManager" unique_id=1984148578]
+script = ExtResource("15_xo05s")
+
+[node name="TTTEOS" type="Node" parent="GameStateManager/OnlineModeAPI" unique_id=304645407]
+script = ExtResource("16_dss4m")
+metadata/_custom_type_script = "uid://biutw3lxl0cpw"
 
 [editable path="GameLayer/Game"]

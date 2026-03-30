@@ -6,6 +6,7 @@ var game_state: GameState = GameState.new()
 
 @export var board: Board
 @onready var local_mode: LocalModeAPI = $LocalModeAPI
+@onready var online_mode: OnlineModeAPI = $OnlineModeAPI
 
 func _ready() -> void:
 	multiplayer.peer_connected.connect(_on_peer_connected)
@@ -16,6 +17,12 @@ func _ready() -> void:
 func start_local_game() -> void:
 	clear_hud()
 	if local_mode.start_offline_game() == LocalModeAPI.PeerKind.Host:
+		_player_connected_event(1, "HosterMan")
+	EventBus.game_started.emit()
+
+func start_online_game() -> void:
+	clear_hud()
+	if online_mode.start_offline_game() == OnlineModeAPI.PeerKind.Host:
 		_player_connected_event(1, "HosterMan")
 	EventBus.game_started.emit()
 

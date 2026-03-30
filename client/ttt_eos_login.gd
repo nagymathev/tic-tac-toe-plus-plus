@@ -15,9 +15,10 @@ var local_lobby: HLobby
 signal game_started
 signal hosting_server
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	
+const CLIENT: int = 0
+const SERVER: int = 1
+
+func init_connection() -> void:
 	if !eos_setup:
 		var init_opts := EOS.Platform.InitializeOptions.new()
 		init_opts.product_name = secrets.product_name
@@ -68,19 +69,18 @@ func _on_connect_login_callback(data: Dictionary) -> void:
 	print_rich("[color=green][b]Login successfull[/b][/color]: local_user_id=", data.local_user_id)
 	local_user_id = data.local_user_id
 	HAuth.product_user_id = local_user_id
-	find_match()
 
 func _on_eos_log_msg(msg) -> void:
 	msg = EOS.Logging.LogMessage.from(msg) as EOS.Logging.LogMessage
 	print("SDK %s | %s" % [msg.category, msg.message])
 
-func _notification(what: int) -> void:
-	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		print("Shutting down EOS...")
-		EOS.Platform.PlatformInterface.release()
-		var res := EOS.Platform.PlatformInterface.shutdown()
-		if not EOS.is_success(res):
-			printerr("Failed to shutdown EOS: ", EOS.result_str(res))
+#func _notification(what: int) -> void:
+#	if what == NOTIFICATION_WM_CLOSE_REQUEST:
+#		print("Shutting down EOS...")
+#		EOS.Platform.PlatformInterface.release()
+#		var res := EOS.Platform.PlatformInterface.shutdown()
+#		if not EOS.is_success(res):
+#			printerr("Failed to shutdown EOS: ", EOS.result_str(res))
 
 func _on_peer_connected(id: int) -> void:
 	print_rich("[color=orange]Player %s connected![/color]" % id)
@@ -92,12 +92,14 @@ func _on_peer_disconnected(id: int) -> void:
 	print_rich("[color=orange]Player %s disconnected![/color]" % id)
 	exit_game()
 
-func find_match() -> void:
+func find_match() -> int:
 	await get_tree().create_timer(1.0).timeout
 	if not await search_lobbies():
 		await get_tree().create_timer(1.0).timeout
 		if not await search_lobbies():
 			create_lobby()
+			return SERVER
+	return CLIENT
 
 func search_lobbies() -> bool:
 	var lobbies = await HLobbies.search_by_bucket_id_async(LOBBY_BUCKET_ID)
