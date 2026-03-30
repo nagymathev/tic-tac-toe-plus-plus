@@ -5,6 +5,110 @@
 [ext_resource type="Script" uid="uid://55iqepgtj4qh" path="res://scripts/world_manager.gd" id="2_w7kh3"]
 [ext_resource type="PackedScene" uid="uid://ycrrkg03gmof" path="res://scenes/game.tscn" id="4_71j4m"]
 [ext_resource type="PackedScene" uid="uid://dur2jwjhbnjdg" path="res://scenes/menu.tscn" id="4_k0juu"]
+[ext_resource type="Script" uid="uid://c7uc80x26l858" path="res://scripts/info_panel.gd" id="5_7r4gi"]
+[ext_resource type="PackedScene" uid="uid://t1154idky767" path="res://scenes/board/board_cell.tscn" id="7_e3hyu"]
+[ext_resource type="Texture2D" uid="uid://e46oa8gxgvcq" path="res://assets/indicator.png" id="8_q5onr"]
+[ext_resource type="Texture2D" uid="uid://do1yfjxln7jlg" path="res://assets/scaffolding.png" id="9_w7kh3"]
+[ext_resource type="Script" uid="uid://cavo30tl71ytn" path="res://scripts/animation/transition_animation.gd" id="10_e3hyu"]
+[ext_resource type="PackedScene" uid="uid://crwrvycmupxlc" path="res://scenes/game_finished_screen.tscn" id="10_q5onr"]
+[ext_resource type="Shader" uid="uid://wyx2p2v5onlf" path="res://shaders/transition.gdshader" id="11_e3hyu"]
+[ext_resource type="Script" uid="uid://dselis672meol" path="res://scripts/game_state_manager.gd" id="13_jhx03"]
+[ext_resource type="Script" uid="uid://df7wpqkfha16" path="res://scripts/local_mode_api.gd" id="14_o8fc1"]
+
+[sub_resource type="Animation" id="Animation_e3hyu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:material:shader_parameter/invert")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_q5onr"]
+resource_name = "enter_transition"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:material:shader_parameter/invert")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_jhx03"]
+resource_name = "exit_transition"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:material:shader_parameter/radius")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:material:shader_parameter/invert")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_o8fc1"]
+_data = {
+&"RESET": SubResource("Animation_e3hyu"),
+&"enter_transition": SubResource("Animation_q5onr"),
+&"exit_transition": SubResource("Animation_jhx03")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q5onr"]
+shader = ExtResource("11_e3hyu")
+shader_parameter/radius = 0.0
+shader_parameter/invert = false
 
 [node name="World" type="Control" unique_id=2066262059]
 layout_mode = 3
@@ -21,21 +125,124 @@ script = ExtResource("2_w7kh3")
 [node name="Background" parent="." unique_id=2140569013 instance=ExtResource("1_i7141")]
 layout_mode = 1
 
-[node name="Game" parent="." unique_id=1795668985 instance=ExtResource("4_71j4m")]
+[node name="GameLayer" type="CanvasLayer" parent="." unique_id=1296270413]
+
+[node name="Game" parent="GameLayer" unique_id=1795668985 instance=ExtResource("4_71j4m")]
 visible = false
-layout_mode = 1
 
-[node name="Menu" parent="." unique_id=1862628629 instance=ExtResource("4_k0juu")]
-layout_mode = 1
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1486886490]
 
-[node name="Label" type="Label" parent="." unique_id=2004939126]
-layout_mode = 1
+[node name="InfoPanelContainer" type="PanelContainer" parent="HUD" unique_id=33278486]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = 20.0
+offset_top = -47.0
+offset_right = 54.00006
+offset_bottom = 41.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("1_4mrxx")
+script = ExtResource("5_7r4gi")
+
+[node name="MarginContainer" type="MarginContainer" parent="HUD/InfoPanelContainer" unique_id=378453887]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD/InfoPanelContainer/MarginContainer" unique_id=1086279881]
+layout_mode = 2
+theme_type_variation = &"BorderPanelContainer"
+
+[node name="InfoPanel" type="VBoxContainer" parent="HUD/InfoPanelContainer/MarginContainer/PanelContainer" unique_id=766443818]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="MyPlayer" parent="HUD/InfoPanelContainer/MarginContainer/PanelContainer/InfoPanel" unique_id=1971803156 instance=ExtResource("7_e3hyu")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Indicator" type="TextureRect" parent="HUD/InfoPanelContainer/MarginContainer/PanelContainer/InfoPanel" unique_id=764386751]
+layout_mode = 2
+texture = ExtResource("8_q5onr")
+
+[node name="CurrentPlayer" parent="HUD/InfoPanelContainer/MarginContainer/PanelContainer/InfoPanel" unique_id=1903373504 instance=ExtResource("7_e3hyu")]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Scaffolding1" type="Sprite2D" parent="HUD/InfoPanelContainer" unique_id=1143971464]
+z_index = -10
+position = Vector2(49, 9)
+texture = ExtResource("9_w7kh3")
+
+[node name="Scaffolding2" type="Sprite2D" parent="HUD/InfoPanelContainer" unique_id=1179015934]
+z_index = -10
+position = Vector2(49, 77)
+texture = ExtResource("9_w7kh3")
+
+[node name="TransitionAnimation" type="Node" parent="HUD/InfoPanelContainer" unique_id=1236657070]
+script = ExtResource("10_e3hyu")
+entry_position = Vector2(276, 44)
+exit_position = Vector2(340, 43)
+
+[node name="GameFinishedScreen" parent="HUD" unique_id=1830582861 instance=ExtResource("10_q5onr")]
+offset_top = 140.0
+offset_bottom = 140.0
+
+[node name="TransitionAnimation" type="Node" parent="HUD/GameFinishedScreen" unique_id=2122390212]
+script = ExtResource("10_e3hyu")
+entry_position = Vector2(160, 120)
+exit_position = Vector2(160, 227)
+metadata/_custom_type_script = "uid://cavo30tl71ytn"
+
+[node name="Scaffolding1" type="Sprite2D" parent="HUD/GameFinishedScreen" unique_id=2083360360]
+z_index = -10
+position = Vector2(-33, 46)
+rotation = 1.5707964
+texture = ExtResource("9_w7kh3")
+
+[node name="Scaffolding2" type="Sprite2D" parent="HUD/GameFinishedScreen" unique_id=1759949958]
+z_index = -10
+position = Vector2(34, 47)
+rotation = 1.5707964
+texture = ExtResource("9_w7kh3")
+
+[node name="Label" type="Label" parent="HUD" unique_id=2004939126]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
-offset_left = 4.0
-offset_top = -8.0
-offset_right = 44.0
-offset_bottom = -4.0
+offset_top = -4.0
+offset_right = 16.0
 grow_vertical = 0
+theme = ExtResource("1_4mrxx")
 text = "v0.1"
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1923847485]
+
+[node name="Menu" parent="UI" unique_id=1862628629 instance=ExtResource("4_k0juu")]
+
+[node name="Transitions" type="CanvasLayer" parent="." unique_id=1164632902]
+layer = 100
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Transitions" unique_id=306999669]
+libraries/ = SubResource("AnimationLibrary_o8fc1")
+
+[node name="ColorRect" type="ColorRect" parent="Transitions" unique_id=248917861]
+material = SubResource("ShaderMaterial_q5onr")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.16862746, 0.6, 0.6862745, 1)
+
+[node name="GameStateManager" type="Node" parent="." unique_id=611312638 node_paths=PackedStringArray("board")]
+script = ExtResource("13_jhx03")
+board = NodePath("../GameLayer/Game/Board")
+metadata/_custom_type_script = "uid://dselis672meol"
+
+[node name="LocalModeAPI" type="Node" parent="GameStateManager" unique_id=2090087945]
+script = ExtResource("14_o8fc1")
+
+[editable path="GameLayer/Game"]

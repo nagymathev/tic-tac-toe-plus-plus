@@ -132,5 +132,13 @@ func determine_winner() -> Tile:
 	
 	return Tile.Empty
 
+func is_full() -> bool:
+	var full := true
+	for tile in board:
+		if tile == Tile.Empty:
+			full = false
+			break
+	return full
+
 func _eq_three(a, b, c) -> bool:
 	return a == b && a == c && b == c

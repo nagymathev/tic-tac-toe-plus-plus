@@ -1,11 +1,15 @@
 class_name Menu extends Control
 
 signal online_play(settings: OnlineSettings)
-signal offline_play
 signal settings
 
 @onready var online_settings_widget = preload("res://scenes/window/online_play_settings_widget.tscn")
 var menu_stack: Array[Control] = []
+
+@onready var online_button: Button = %PlayOnlineButton
+@onready var offline_button: Button = %PlayOfflineButton
+@onready var settings_button: Button = %SettingsButton
+@onready var quit_button: Button = %QuitButton
 
 func _ready() -> void:
 	%PlayOnlineButton.pressed.connect(_on_play_online)
@@ -38,14 +42,14 @@ func _on_play_online() -> void:
 
 # TODO: Remove it from this class, it doesn't belong here.
 func _on_server_hosting() -> void:
-	GameStateManager._player_connected_event(1, "THEGARY")
+	pass
 
 func _on_online_cancelled() -> void:
 	var widget: Control = menu_stack.pop_back()
 	widget.queue_free()
 
 func _on_play_offline() -> void:
-	offline_play.emit()
+	pass
 
 func _on_settings() -> void:
 	settings.emit()
